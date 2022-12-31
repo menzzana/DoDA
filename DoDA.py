@@ -15,11 +15,14 @@
 #==============================================================================
 import wx
 import datetime
+import json
+import os
 #==============================================================================
 # Constants
 #==============================================================================
 VERSION = "0.1.0"
 SOFTWARENAME = "DoDA v" + VERSION
+LASTCOMMIT = 'git log -n 1 --pretty=format:%h'
 ROUND = 'Runda'
 TURN = 'Kvart'
 SHIFT = 'Skift'
@@ -34,6 +37,15 @@ EVENT = 'Händelse'
 OK = 'Ok'
 CANCEL = 'Avbryt'
 TITLE = 'Titel'
+MENYTEXT = '&Arkiv'
+MENYOPEN = 'Öppna'
+MENYSAVE = 'Spara'
+MENYCONF = 'Konfiguration'
+MENYQUIT = 'Avsluta'
+MENYABOUT = 'Information'
+INFORMATION = 'Drakar och Demoner Assistent. Mer information går att få på https://github.com/menzzana/DoDA. Utvecklad av Henric Zazzi'
+SAVEERROR = "Kan inte spara till %s."
+JSONTIME = "{\"time\": \"%s\"}"
 #==============================================================================
 # mainFrame
 #==============================================================================
@@ -44,8 +56,8 @@ class mainFrame(wx.Frame):
   eventlist = {}
   events = []
 #------------------------------------------------------------------------------
-  def __init__(self, parent):
-    super(mainFrame, self).__init__(parent, title=SOFTWARENAME, size=(1000, 500))
+  def __init__(self, parent, title):
+    super(mainFrame, self).__init__(parent, title=title, size=(1000, 500))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
     self.tid = datetime.datetime.now()
@@ -68,6 +80,18 @@ class mainFrame(wx.Frame):
     button6 = wx.Button(self.panel, wx.ID_ANY, DELEVENT, (160, 330))
     button5.Bind(wx.EVT_BUTTON, self.onButton5)  
     button6.Bind(wx.EVT_BUTTON, self.onButton6)  
+    menubar = wx.MenuBar()
+    menu1 = wx.Menu()
+    menuitem1 = menu1.Append(wx.ID_ANY, '&' + MENYOPEN, MENYOPEN)
+    menuitem2 = menu1.Append(wx.ID_ANY, '&' + MENYSAVE, MENYSAVE)
+    self.Bind(wx.EVT_MENU, self.Save, menuitem2)
+    menuitem3 = menu1.Append(wx.ID_ANY, '&' + MENYCONF, MENYCONF)
+    menuitem4 = menu1.Append(wx.ID_ANY, '&' + MENYQUIT, MENYQUIT)
+    self.Bind(wx.EVT_MENU, self.Quit, menuitem4)
+    menuitem5 = menu1.Append(wx.ID_ANY, '&' + MENYABOUT, MENYABOUT)
+    self.Bind(wx.EVT_MENU, self.About, menuitem5)
+    menubar.Append(menu1, MENYTEXT)
+    self.SetMenuBar(menubar)
 #------------------------------------------------------------------------------
   def onButton1(self, event, timediff):
     self.tid = self.tid + timediff
@@ -125,6 +149,29 @@ class mainFrame(wx.Frame):
       event.text = eventframe.eventtext.GetValue()
       self.eventlist.SetString(self.eventlist.GetSelection(), self.events[self.eventlist.GetSelection()].title)
     eventframe.Destroy()
+#------------------------------------------------------------------------------
+  def Quit(self, event):
+    exit(0)
+#------------------------------------------------------------------------------
+  def About(self, event):
+    wx.MessageBox(INFORMATION, SOFTWARENAME, style=wx.ICON_NONE)
+#------------------------------------------------------------------------------
+  def Save(self, event):
+    with wx.FileDialog(self, MENYSAVE, wildcard="json files (*.json)|*.json",
+        style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+      if fileDialog.ShowModal() == wx.ID_CANCEL:
+        return
+      pathname = fileDialog.GetPath()
+      if not '.json' in pathname:
+        pathname = pathname + '.json'
+      try:
+        with open(pathname, 'w') as fp:
+          fp.write(JSONTIME % self.tid)
+          for i in self.events:
+            fp.write(json.dumps(i.__dict__, default=str))
+        fp.close()
+      except IOError:
+        wx.LogError(SAVEERROR % pathname)
 #==============================================================================
 class eventFrame(wx.Frame):
   panel = None
@@ -138,8 +185,6 @@ class eventFrame(wx.Frame):
     super().__init__(None, title=EVENT, size=(450, 470))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
-    #self.tid = tid
-    #self.printTime()
     button1 = wx.Button(self.panel, wx.ID_ANY, ROUND, (50, 50))
     button2 = wx.Button(self.panel, wx.ID_ANY, TURN, (135, 50))
     button3 = wx.Button(self.panel, wx.ID_ANY, SHIFT, (220, 50))
@@ -200,8 +245,9 @@ class Events:
 # Main
 #==============================================================================
 def main():
+  COMMITHASH = "-" + os.popen(LASTCOMMIT).read()
   app = wx.App()
-  mainframe = mainFrame(None)
+  mainframe = mainFrame(None, SOFTWARENAME+COMMITHASH)
   mainframe.Show()
   app.MainLoop()
 #==============================================================================
