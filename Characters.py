@@ -1,4 +1,3 @@
-#!/usr/bin/python
 #==============================================================================
 # Drakar och Demoner Assistent (DoDA)
 # Copyright (C) 2022  Henric Zazzi <hzazzi@kth.se>
@@ -13,24 +12,15 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
-import wx
-import datetime
-import os
-import sys
-import Config
-from mainFrame import mainFrame
+class Characters:
+  name = None
+  ac = None
+  wp = None
+  text = None
 #------------------------------------------------------------------------------
-def main():
-  Config.LANG = Config.Swedish()
-  if len(sys.argv)>1:
-    if sys.argv[1] == 'eng':
-      Config.LANG = Config.English()
-  Config.SOFTWARENAME = Config.SOFTWARENAME + "-" + os.popen(Config.LASTCOMMIT).read()
-  app = wx.App()
-  mainframe = mainFrame(None, Config.SOFTWARENAME)
-  mainframe.Show()
-  app.MainLoop()
-#------------------------------------------------------------------------------
-if __name__ == '__main__':  
-  main()
+  def __init__(self, name, ac, wp, text):
+    self.name = name
+    self.ac = ac
+    self.wp = wp
+    self.text = text
 #------------------------------------------------------------------------------

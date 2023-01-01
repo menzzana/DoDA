@@ -21,6 +21,8 @@ import decimal
 import Config
 from eventFrame import eventFrame
 from Events import Events
+from Characters import Characters
+from charFrame import charFrame
 #------------------------------------------------------------------------------
 class mainFrame(wx.Frame):
   tid = None
@@ -31,11 +33,26 @@ class mainFrame(wx.Frame):
   tidlabel = None
   eventlist = {}
   events = []
+  characters = []
+  charlist = {}
 #------------------------------------------------------------------------------
   def __init__(self, parent, title):
-    super(mainFrame, self).__init__(parent, title=title, size=(1000, 600))
+    super(mainFrame, self).__init__(parent, title=title, size=(800, 600))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
+    menubar = wx.MenuBar()
+    menu1 = wx.Menu()
+    menuitem1 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYOPEN, Config.LANG.MENYOPEN)
+    self.Bind(wx.EVT_MENU, self.Load, menuitem1)    
+    menuitem2 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYSAVE, Config.LANG.MENYSAVE)
+    self.Bind(wx.EVT_MENU, self.Save, menuitem2)
+    #menuitem3 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYCONF, Config.LANG.MENYCONF)
+    menuitem4 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYABOUT, Config.LANG.MENYABOUT)
+    self.Bind(wx.EVT_MENU, self.About, menuitem4)
+    menuitem5 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYQUIT, Config.LANG.MENYQUIT)
+    self.Bind(wx.EVT_MENU, self.Quit, menuitem5)
+    menubar.Append(menu1, Config.LANG.MENYTEXT)
+    self.SetMenuBar(menubar)
     self.tid = datetime.datetime.now()
     self.weathertime = self.tid
     self.printTime()
@@ -57,19 +74,16 @@ class mainFrame(wx.Frame):
     button6 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.DELEVENT, (160, 480))
     button5.Bind(wx.EVT_BUTTON, self.onButton5)  
     button6.Bind(wx.EVT_BUTTON, self.onButton6)  
-    menubar = wx.MenuBar()
-    menu1 = wx.Menu()
-    menuitem1 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYOPEN, Config.LANG.MENYOPEN)
-    self.Bind(wx.EVT_MENU, self.Load, menuitem1)    
-    menuitem2 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYSAVE, Config.LANG.MENYSAVE)
-    self.Bind(wx.EVT_MENU, self.Save, menuitem2)
-    #menuitem3 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYCONF, Config.LANG.MENYCONF)
-    menuitem4 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYABOUT, Config.LANG.MENYABOUT)
-    self.Bind(wx.EVT_MENU, self.About, menuitem4)
-    menuitem5 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYQUIT, Config.LANG.MENYQUIT)
-    self.Bind(wx.EVT_MENU, self.Quit, menuitem5)
-    menubar.Append(menu1, Config.LANG.MENYTEXT)
-    self.SetMenuBar(menubar)
+    lbl2 = wx.StaticText(self.panel, pos = (450, 30), size = (100,20), label = Config.LANG.CHARS)
+    lbl2font = self.GetFont() 
+    lbl2font.SetWeight(wx.BOLD)
+    lbl2.SetFont(lbl2font)
+    self.charlist = wx.ListBox(self.panel, size = (300,300), choices=[], pos=(450,50), style = wx.LB_SINGLE)
+    self.charlist.Bind(wx.EVT_LISTBOX_DCLICK, self.onDblClickCharBox)
+    button7 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.NEWCHAR, (450, 360))
+    button8 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.DELCHAR, (560, 360))
+    button7.Bind(wx.EVT_BUTTON, self.onButton7)  
+    button8.Bind(wx.EVT_BUTTON, self.onButton8) 
 #------------------------------------------------------------------------------
   def onButton1(self, event, timediff):
     self.tid = self.tid + timediff
@@ -101,7 +115,7 @@ class mainFrame(wx.Frame):
     for idx, event in enumerate(self.events):
       if event.when <= self.tid:
         wx.MessageBox(event.text, event.title, style=wx.ICON_NONE)
-        self.DeleteItem(idx)
+        self.DeleteEvent(idx)
     days = self.tid.day + self.tid.second / float(86400)
     phase = int((0.20439731 + float(days) * 0.03386319269) % 1 * float(8))
     tidinfo = tidinfo + Config.LANG.MOONPHASES[phase]
@@ -129,11 +143,32 @@ class mainFrame(wx.Frame):
   def onButton6(self, event):
     if self.eventlist.GetSelection()<0:
       return
-    self.DeleteItem(self.eventlist.GetSelection())
+    self.DeleteEvent(self.eventlist.GetSelection())
 #------------------------------------------------------------------------------
-  def DeleteItem(self, itemn):  
+  def onButton7(self, event):
+    charframe = charFrame()
+    charframe.setValues('', '', '', '')
+    charframe.Show()
+    while charframe.IsShown():
+      wx.GetApp().Yield()
+    if charframe.onOk:
+      self.characters.append(Characters(charframe.nametext.GetValue(), int(charframe.actext.GetValue()), 
+        int(charframe.wptext.GetValue()), charframe.chartext.GetValue()))
+      self.charlist.Append(self.characters[self.charlist.GetCount()].name)
+    charframe.Destroy()
+#------------------------------------------------------------------------------
+  def onButton8(self, event):
+    if self.charlist.GetSelection()<0:
+      return
+    self.DeleteCharacter(self.charlist.GetSelection())
+#------------------------------------------------------------------------------
+  def DeleteEvent(self, itemn):  
     self.events.pop(itemn)
     self.eventlist.Delete(itemn)
+#------------------------------------------------------------------------------
+  def DeleteCharacter(self, itemn):  
+    self.characters.pop(itemn)
+    self.charlist.Delete(itemn)
 #------------------------------------------------------------------------------
   def onDblClickListBox(self, event):
     if self.eventlist.GetSelection()<0:
@@ -150,6 +185,23 @@ class mainFrame(wx.Frame):
       event.text = eventframe.eventtext.GetValue()
       self.eventlist.SetString(self.eventlist.GetSelection(), self.events[self.eventlist.GetSelection()].title)
     eventframe.Destroy()
+#------------------------------------------------------------------------------
+  def onDblClickCharBox(self, event):
+    if self.charlist.GetSelection()<0:
+      return
+    character = self.characters[self.charlist.GetSelection()]
+    charframe = charFrame()
+    charframe.setValues(character.name, character.ac, character.wp, character.text)
+    charframe.Show()
+    while charframe.IsShown():
+      wx.GetApp().Yield()
+    if charframe.onOk:
+      character.name = charframe.nametext.GetValue()
+      character.ac = int(charframe.actext.GetValue())
+      character.wp = int(charframe.wptext.GetValue())
+      character.text = charframe.chartext.GetValue()
+      self.charlist.SetString(self.charlist.GetSelection(), self.characters[self.charlist.GetSelection()].name)
+    charframe.Destroy()
 #------------------------------------------------------------------------------
   def Quit(self, event):
     exit(0)
@@ -175,7 +227,12 @@ class mainFrame(wx.Frame):
           for idx, i in enumerate(self.events):
             if idx > 0:
               fp.write(',\n')
-            fp.write(json.dumps(i.__dict__, default=str))
+            fp.write(Config.JSONEVENT % (i.when, i.title, i.text))
+          fp.write('\n],\n' + Config.JSONCHARACTERS)
+          for idx, i in enumerate(self.characters):
+            if idx > 0:
+              fp.write(',\n')
+            fp.write(json.dumps(i.__dict__))
           fp.write('\n]\n}\n')
         fp.close()
       except IOError:
@@ -200,6 +257,9 @@ class mainFrame(wx.Frame):
         for i in data['events']:
           self.events.append(Events(datetime.datetime.strptime(i['when'], Config.DATETIMEFORMAT), i['title'], i['text']))
           self.eventlist.Append(self.events[self.eventlist.GetCount()].title)
+        for i in data['characters']:
+          self.characters.append(Characters(i['name'], int(i['ac']), int(i['wp']), i['text']))
+          self.charlist.Append(self.characters[self.charlist.GetCount()].name)
       except IOError:
         wx.LogError(Config.LANG.LOADERROR % pathname)
 #------------------------------------------------------------------------------
