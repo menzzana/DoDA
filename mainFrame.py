@@ -15,39 +15,46 @@
 import wx
 import datetime
 import json
+import random
+import math
+import decimal
 import Config
 from eventFrame import eventFrame
 from Events import Events
 #------------------------------------------------------------------------------
 class mainFrame(wx.Frame):
   tid = None
+  weatherstatus = None
+  weathertime = None
   panel = None
   tidtext = None
+  tidlabel = None
   eventlist = {}
   events = []
 #------------------------------------------------------------------------------
   def __init__(self, parent, title):
-    super(mainFrame, self).__init__(parent, title=title, size=(1000, 500))
+    super(mainFrame, self).__init__(parent, title=title, size=(1000, 600))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
     self.tid = datetime.datetime.now()
+    self.weathertime = self.tid
     self.printTime()
-    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.ROUND, (50, 50))
-    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TURN, (135, 50))
-    button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SHIFT, (220, 50))
-    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SETTIME, (50, 20))
+    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SETTIME, (50, 110))
+    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.ROUND, (135, 110))
+    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TURN, (220, 110))
+    button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SHIFT, (305, 110))
     button1.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(seconds=10): self.onButton1(event, timediff) )
     button2.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(minutes=15): self.onButton1(event, timediff) )
     button3.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(hours=6): self.onButton1(event, timediff) )
     button4.Bind(wx.EVT_BUTTON, self.onButton4)    
-    lbl1 = wx.StaticText(self.panel, pos = (50, 100), label = Config.LANG.EVENTS + ' ')
+    lbl1 = wx.StaticText(self.panel, pos = (50, 150), size = (100,20), label = Config.LANG.EVENTS)
     lbl1font = self.GetFont() 
     lbl1font.SetWeight(wx.BOLD)
     lbl1.SetFont(lbl1font)
-    self.eventlist = wx.ListBox(self.panel, size = (300,200), choices=[], pos=(50,120), style = wx.LB_SINGLE)
+    self.eventlist = wx.ListBox(self.panel, size = (355,300), choices=[], pos=(50,170), style = wx.LB_SINGLE)
     self.eventlist.Bind(wx.EVT_LISTBOX_DCLICK, self.onDblClickListBox)
-    button5 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.NEWEVENT, (50, 330))
-    button6 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.DELEVENT, (160, 330))
+    button5 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.NEWEVENT, (50, 480))
+    button6 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.DELEVENT, (160, 480))
     button5.Bind(wx.EVT_BUTTON, self.onButton5)  
     button6.Bind(wx.EVT_BUTTON, self.onButton6)  
     menubar = wx.MenuBar()
@@ -56,12 +63,11 @@ class mainFrame(wx.Frame):
     self.Bind(wx.EVT_MENU, self.Load, menuitem1)    
     menuitem2 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYSAVE, Config.LANG.MENYSAVE)
     self.Bind(wx.EVT_MENU, self.Save, menuitem2)
-    menuitem3 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYCONF, Config.LANG.MENYCONF)
+    #menuitem3 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYCONF, Config.LANG.MENYCONF)
     menuitem4 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYABOUT, Config.LANG.MENYABOUT)
     self.Bind(wx.EVT_MENU, self.About, menuitem4)
     menuitem5 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYQUIT, Config.LANG.MENYQUIT)
     self.Bind(wx.EVT_MENU, self.Quit, menuitem5)
-
     menubar.Append(menu1, Config.LANG.MENYTEXT)
     self.SetMenuBar(menubar)
 #------------------------------------------------------------------------------
@@ -72,17 +78,40 @@ class mainFrame(wx.Frame):
   def printTime(self):
     if not self.tidtext == None:
       self.tidtext.Destroy()
-    self.tidtext = wx.StaticText(self.panel, pos = (140, 25), label = self.tid.strftime(Config.TIMEFORMATDAY))
+      self.tidlabel.Destroy()
+    dt = Config.LANG.WEEKDAY[self.tid.weekday()] + ' ' + Config.DATEFORMAT
+    self.tidlabel = wx.StaticText(self.panel, pos = (50, 25), size=(100, 50), label = Config.LANG.TIMETEXT)
+    tidfont = self.GetFont() 
+    tidfont.SetWeight(wx.BOLD)
+    self.tidlabel.SetFont(tidfont)
+    tidinfo = self.tid.strftime(dt) + '\n'
+    dayphase = len(Config.DAYTIMELIMIT) - 1
+    for idx, timelimit in enumerate(Config.DAYTIMELIMIT):
+      if self.tid.time() > datetime.datetime.strptime(timelimit, '%H:%M').time():
+        dayphase = idx
+    tidinfo = tidinfo + Config.LANG.SUNTEXT[dayphase] + ' ' + self.tid.strftime(Config.TIMEFORMAT) + '\n'
+    if self.weathertime <= self.tid:
+      self.weathertime = self.weathertime + datetime.timedelta(hours=(random.randint(0,Config.WEATHERTIME)))
+      r = random.random()
+      self.weatherstatus = 0
+      while r > Config.WEATHERRATIO[self.weatherstatus]:
+        r = r - Config.WEATHERRATIO[self.weatherstatus]
+        self.weatherstatus = self.weatherstatus + 1
+    tidinfo = tidinfo + Config.LANG.WEATHER[self.weatherstatus] + '\n'
     for idx, event in enumerate(self.events):
       if event.when <= self.tid:
         wx.MessageBox(event.text, event.title, style=wx.ICON_NONE)
         self.DeleteItem(idx)
+    days = self.tid.day + self.tid.second / float(86400)
+    phase = int((0.20439731 + float(days) * 0.03386319269) % 1 * float(8))
+    tidinfo = tidinfo + Config.LANG.MOONPHASES[phase]
+    self.tidtext = wx.StaticText(self.panel, pos = (150, 25), label = tidinfo)
 #------------------------------------------------------------------------------
   def onButton4(self, event):
     dlg = wx.TextEntryDialog(self, Config.LANG.TIMEFORMATTITLE, Config.LANG.SETTIME)
     dlg.SetValue(self.tid.strftime(Config.TIMEFORMAT))
     if dlg.ShowModal() == wx.ID_OK:
-      self.tid = datetime.datetime.strptime(dlg.GetValue(), TIMEFORMAT)
+      self.tid = datetime.datetime.strptime(dlg.GetValue(), Config.TIMEFORMAT)
       self.printTime()
     dlg.Destroy()
 #------------------------------------------------------------------------------
@@ -126,7 +155,7 @@ class mainFrame(wx.Frame):
     exit(0)
 #------------------------------------------------------------------------------
   def About(self, event):
-    wx.MessageBox(Config.LANG.INFORMATION, Config.LANG.SOFTWARENAME, style=wx.ICON_NONE)
+    wx.MessageBox(Config.LANG.INFORMATION, Config.SOFTWARENAME, style=wx.ICON_NONE)
 #------------------------------------------------------------------------------
   def Save(self, event):
     with wx.FileDialog(self, Config.LANG.MENYSAVE, wildcard="json files (*.json)|*.json",
@@ -138,9 +167,16 @@ class mainFrame(wx.Frame):
         pathname = pathname + '.json'
       try:
         with open(pathname, 'w') as fp:
-          fp.write(Config.JSONTIME % self.tid)
-          for i in self.events:
+          fp.write('{\n')
+          fp.write(Config.JSONTIME % datetime.datetime.strftime(self.tid, '%Y-%m-%d %H:%M:%S'))
+          fp.write(Config.JSONWEATHERINDEX % self.weatherstatus)
+          fp.write(Config.JSONWEATHERTIME % datetime.datetime.strftime(self.weathertime, '%Y-%m-%d %H:%M:%S'))
+          fp.write(Config.JSONEVENTS)
+          for idx, i in enumerate(self.events):
+            if idx > 0:
+              fp.write(',\n')
             fp.write(json.dumps(i.__dict__, default=str))
+          fp.write('\n]\n}\n')
         fp.close()
       except IOError:
         wx.LogError(Config.LANG.SAVEERROR % pathname)
@@ -154,8 +190,16 @@ class mainFrame(wx.Frame):
       try:
         with open(pathname, 'r') as fp:
           data = json.load(fp)
-        print(data)
         fp.close()
+        self.tid = datetime.datetime.strptime(data['time'], Config.DATETIMEFORMAT)
+        self.weatherstatus = int(data['weatherindex'])
+        self.weathertime = datetime.datetime.strptime(data['weathertime'], Config.DATETIMEFORMAT)
+        self.printTime()
+        self.events.clear()
+        self.eventlist.Clear()
+        for i in data['events']:
+          self.events.append(Events(datetime.datetime.strptime(i['when'], Config.DATETIMEFORMAT), i['title'], i['text']))
+          self.eventlist.Append(self.events[self.eventlist.GetCount()].title)
       except IOError:
         wx.LogError(Config.LANG.LOADERROR % pathname)
 #------------------------------------------------------------------------------

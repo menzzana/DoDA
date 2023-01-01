@@ -16,9 +16,19 @@ LANG = None
 VERSION = "0.1.0"
 SOFTWARENAME = "DoDA v" + VERSION
 LASTCOMMIT = 'git log -n 1 --pretty=format:%h'
-TIMEFORMAT = '%Y-%m-%d %H:%M:%S'
-TIMEFORMATDAY = '%a '+TIMEFORMAT
-JSONTIME = "{\"time\": \"%s\"}"
+DATEFORMAT = '%Y-%m-%d'
+TIMEFORMAT = '%H:%M:%S'
+DATETIMEFORMAT = '%Y-%m-%d %H:%M:%S'
+JSONTIME = '\"time\": \"%s\",\n'
+JSONWEATHERINDEX = '\"weatherindex\": \"%s\",\n'
+JSONWEATHERTIME = '\"weathertime\": \"%s\",\n'
+JSONEVENTS = '\"events": [\n'
+# Chance of one of the weathertypes occuring
+WEATHERRATIO = [0.15,0.3,0.15,0.2,0.1,0.05,0.05]
+# Weather shift happens every 0-WEATHETIME hours
+WEATHERTIME = 6
+# Sun variables
+DAYTIMELIMIT = ['5:00', '7:00', '17:00', '19:00']
 #------------------------------------------------------------------------------
 class Swedish:
   ROUND = 'Runda'
@@ -42,6 +52,11 @@ class Swedish:
   INFORMATION = 'Drakar och Demoner Assistent.\nMer information finns på https://github.com/menzzana/DoDA.\nUtvecklad av Henric Zazzi'
   SAVEERROR = 'Kan inte spara till %s.'
   LOADERROR = 'Kan inte öppna %s.'
+  WEEKDAY = ['Måndag', 'Tisdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lördag', 'Söndag']
+  WEATHER = ['Klart', 'Halvklart', 'Molnigt', 'Regn', 'Dimma', 'Storm', 'Åska']
+  MOONPHASES = ['Nymåne', 'tilltagande halvmåne', 'Halvmåne', 'tilltagande fullmåne', 'Fullmåne', 'avtagande fullmåne', 'Halvmåne', 'avtagande halvmånen']
+  TIMETEXT = 'Datum\nTid:\nVäder:\nMånfas:'
+  SUNTEXT = ['Soluppgång', 'Dag', 'Solnedgång', 'Natt']
 #------------------------------------------------------------------------------
 class English:
   ROUND = 'Round'
@@ -65,4 +80,9 @@ class English:
   INFORMATION = 'Drakar och Demoner Assistant.\nMore information at https://github.com/menzzana/DoDA.\nDeveloped by Henric Zazzi'
   SAVEERROR = 'Cannot save to %s.'
   LOADERROR = 'Cannot open %s.'
+  WEEKDAY = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  WEATHER = ['Clear', 'Partially cloudy', 'Cloudy', 'Rain', 'Fog', 'Storm', 'Thunderstorm']
+  MOONPHASES = ['New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous', 'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent']
+  TIMETEXT = 'Date:\nTime:\nWeather:\nMoonphase:'
+  SUNTEXT = ['Dawn', 'Day', 'Dusk', 'Night']
 #------------------------------------------------------------------------------

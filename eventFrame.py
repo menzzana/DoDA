@@ -34,11 +34,11 @@ class eventFrame(wx.Frame):
     button1.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(seconds=10): self.onButton1(event, timediff) )
     button2.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(minutes=15): self.onButton1(event, timediff) )
     button3.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(hours=6): self.onButton1(event, timediff) )
-    lbl1 = wx.StaticText(self.panel, pos = (50, 100), label = Config.LANG.TITLE + ' ')
+    lbl1 = wx.StaticText(self.panel, pos = (50, 100), size = (100,20), label = Config.LANG.TITLE)
     lbl1font = self.GetFont() 
     lbl1font.SetWeight(wx.BOLD)
     lbl1.SetFont(lbl1font)
-    lbl2 = wx.StaticText(self.panel, pos = (50, 160), label = Config.LANG.EVENT + ' ')
+    lbl2 = wx.StaticText(self.panel, pos = (50, 160), size = (100,20), label = Config.LANG.EVENT)
     lbl2font = self.GetFont() 
     lbl2font.SetWeight(wx.BOLD)
     lbl2.SetFont(lbl2font)
@@ -73,5 +73,6 @@ class eventFrame(wx.Frame):
   def printTime(self):
     if not self.tidtext == None:
       self.tidtext.Destroy()
-    self.tidtext = wx.StaticText(self.panel, pos = (50, 30), label = self.tid.strftime(Config.TIMEFORMATDAY))
+    dt = Config.LANG.WEEKDAY[self.tid.weekday()] + ' ' + Config.TIMEFORMAT
+    self.tidtext = wx.StaticText(self.panel, pos = (50, 30), label = self.tid.strftime(dt))
 #------------------------------------------------------------------------------

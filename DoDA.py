@@ -26,9 +26,9 @@ def main():
   if len(sys.argv)>1:
     if sys.argv[1] == 'eng':
       Config.LANG = Config.English()
-  COMMITHASH = "-" + os.popen(Config.LASTCOMMIT).read()
+  Config.SOFTWARENAME = Config.SOFTWARENAME + "-" + os.popen(Config.LASTCOMMIT).read()
   app = wx.App()
-  mainframe = mainFrame(None, Config.SOFTWARENAME+COMMITHASH)
+  mainframe = mainFrame(None, Config.SOFTWARENAME)
   mainframe.Show()
   app.MainLoop()
 #------------------------------------------------------------------------------
