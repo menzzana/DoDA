@@ -15,4 +15,6 @@ In order to install wax see documentation at https://www.wxpython.org/pages/down
 
 ## How to run
 
-Just run the python file **DoDA.py**
+For a swedish version just run the python file **DoDA.py**
+
+In case you want to run an english version, just run **DoDA.py eng**
