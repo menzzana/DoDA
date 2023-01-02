@@ -40,6 +40,7 @@ class mainFrame(wx.Frame):
     super(mainFrame, self).__init__(parent, title=title, size=(800, 600))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
+    self.panel.SetBackgroundColour(wx.Colour(230, 230, 255))
     menubar = wx.MenuBar()
     menu1 = wx.Menu()
     menuitem1 = menu1.Append(wx.ID_ANY, '&' + Config.LANG.MENYOPEN, Config.LANG.MENYOPEN)

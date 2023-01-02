@@ -28,6 +28,7 @@ class charFrame(wx.Frame):
     super().__init__(None, title=Config.LANG.EVENT, size=(450, 470))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
+    self.panel.SetBackgroundColour(wx.Colour(230, 230, 255))
     lbl1 = wx.StaticText(self.panel, pos = (50, 30), size = (150,20), label = Config.LANG.CHARNAME)
     lbl1font = self.GetFont() 
     lbl1font.SetWeight(wx.BOLD)

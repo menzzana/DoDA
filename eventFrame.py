@@ -28,6 +28,7 @@ class eventFrame(wx.Frame):
     super().__init__(None, title=Config.LANG.EVENT, size=(450, 470))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
+    self.panel.SetBackgroundColour(wx.Colour(230, 230, 255))
     button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.ROUND, (50, 50))
     button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TURN, (135, 50))
     button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SHIFT, (220, 50))
