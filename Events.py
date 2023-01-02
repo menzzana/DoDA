@@ -12,6 +12,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
+import Config
+import datetime
+#------------------------------------------------------------------------------
+JSONEVENT = '{\"when\": \"%s\", \"title\": \"%s\", \"text\": \"%s\"}%s'
+JSONEVENTS = '\"events\": [\n'
+#------------------------------------------------------------------------------
 class Events:
   when = None
   title = None
@@ -21,4 +27,18 @@ class Events:
     self.when = when
     self.title = title
     self.text = text
+#------------------------------------------------------------------------------
+  def jsonSaveHeader():
+    return JSONEVENTS
+#------------------------------------------------------------------------------
+  def jsonSave(self, last):
+    if last:
+      ending = '\n]'
+    else:
+      ending = ',\n'
+    return JSONEVENT % (self.when, self.title, self.text, ending)
+#------------------------------------------------------------------------------
+  @classmethod
+  def jsonLoad(cls, data):
+    return cls(datetime.datetime.strptime(data['when'], Config.DATETIMEFORMAT), data['title'], data['text'])
 #------------------------------------------------------------------------------

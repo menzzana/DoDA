@@ -1,4 +1,3 @@
-#!/usr/bin/python
 #==============================================================================
 # Drakar och Demoner Assistent (DoDA)
 # Copyright (C) 2022  Henric Zazzi <hzazzi@kth.se>

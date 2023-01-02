@@ -22,9 +22,6 @@ DATETIMEFORMAT = '%Y-%m-%d %H:%M:%S'
 JSONTIME = '\"time\": \"%s\",\n'
 JSONWEATHERINDEX = '\"weatherindex\": \"%s\",\n'
 JSONWEATHERTIME = '\"weathertime\": \"%s\",\n'
-JSONEVENT = '{\"when\": \"%s\", \"title\": \"%s\", \"text\": \"%s\"}'
-JSONEVENTS = '\"events\": [\n'
-JSONCHARACTERS = '\"characters\": [\n'
 # Chance of one of the weathertypes occuring
 WEATHERRATIO = [0.15,0.3,0.15,0.2,0.1,0.05,0.05]
 # Weather shift happens every 0-WEATHETIME hours
@@ -93,7 +90,7 @@ class English:
   MENYCONF = 'Configuration'
   MENYQUIT = 'Quit'
   MENYABOUT = 'About'
-  INFORMATION = 'Drakar och Demoner Assistant.\nMore information at https://github.com/menzzana/DoDA.\nDeveloped by Henric Zazzi'
+  INFORMATION = 'Dragonbane Assistant.\nMore information at https://github.com/menzzana/DoDA.\nDeveloped by Henric Zazzi'
   SAVEERROR = 'Cannot save to %s.'
   LOADERROR = 'Cannot open %s.'
   WEEKDAY = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']

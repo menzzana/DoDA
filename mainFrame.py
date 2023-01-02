@@ -223,17 +223,13 @@ class mainFrame(wx.Frame):
           fp.write(Config.JSONTIME % datetime.datetime.strftime(self.tid, '%Y-%m-%d %H:%M:%S'))
           fp.write(Config.JSONWEATHERINDEX % self.weatherstatus)
           fp.write(Config.JSONWEATHERTIME % datetime.datetime.strftime(self.weathertime, '%Y-%m-%d %H:%M:%S'))
-          fp.write(Config.JSONEVENTS)
+          fp.write(Events.jsonSaveHeader())
           for idx, i in enumerate(self.events):
-            if idx > 0:
-              fp.write(',\n')
-            fp.write(Config.JSONEVENT % (i.when, i.title, i.text))
-          fp.write('\n],\n' + Config.JSONCHARACTERS)
+            fp.write(i.jsonSave(idx == len(self.characters) - 1))
+          fp.write(',\n' + Characters.jsonSaveHeader())
           for idx, i in enumerate(self.characters):
-            if idx > 0:
-              fp.write(',\n')
-            fp.write(json.dumps(i.__dict__))
-          fp.write('\n]\n}\n')
+            fp.write(i.jsonSave(idx == len(self.characters) - 1))
+          fp.write('\n}\n')
         fp.close()
       except IOError:
         wx.LogError(Config.LANG.SAVEERROR % pathname)
@@ -255,10 +251,10 @@ class mainFrame(wx.Frame):
         self.events.clear()
         self.eventlist.Clear()
         for i in data['events']:
-          self.events.append(Events(datetime.datetime.strptime(i['when'], Config.DATETIMEFORMAT), i['title'], i['text']))
+          self.events.append(Events.jsonLoad(i))
           self.eventlist.Append(self.events[self.eventlist.GetCount()].title)
         for i in data['characters']:
-          self.characters.append(Characters(i['name'], int(i['ac']), int(i['wp']), i['text']))
+          self.characters.append(Characters.jsonLoad(i))
           self.charlist.Append(self.characters[self.charlist.GetCount()].name)
       except IOError:
         wx.LogError(Config.LANG.LOADERROR % pathname)

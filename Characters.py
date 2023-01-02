@@ -12,6 +12,9 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
+JSONCHARACTER = '{\"name\": \"%s\", \"ac\": \"%s\", \"wp\": \"%s\", \"text\": \"%s\"}%s'
+JSONCHARACTERS = '\"characters\": [\n'
+#------------------------------------------------------------------------------
 class Characters:
   name = None
   ac = None
@@ -23,4 +26,18 @@ class Characters:
     self.ac = ac
     self.wp = wp
     self.text = text
+#------------------------------------------------------------------------------
+  def jsonSaveHeader():
+    return JSONCHARACTERS
+#------------------------------------------------------------------------------
+  def jsonSave(self, last):
+    if last:
+      ending = '\n]'
+    else:
+      ending = ',\n'
+    return JSONCHARACTER % (self.name, self.ac, self.wp, self.text, ending)
+#------------------------------------------------------------------------------
+  @classmethod
+  def jsonLoad(cls, data):
+    return cls(data['name'], int(data['ac']), int(data['wp']), data['text'])
 #------------------------------------------------------------------------------
