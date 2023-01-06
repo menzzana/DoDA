@@ -1,0 +1,27 @@
+{
+"time": "2023-01-01 16:38:41",
+"weatherindex": "0",
+"weathertime": "2023-01-01 21:38:41",
+"events": [
+{"when": "2023-01-01 17:08:41", "title": "Howard poisoned", "text": "Howard was poisoned and symptoms are starting to show"},
+{"when": "2023-01-02 16:38:51", "title": "King timeout", "text": "The kings time has run out to do the assignment"},
+{"when": "2023-01-01 17:35:41", "title": "The troll is back", "text": "Troll is now back at his home"},
+{"when": "2023-01-01 17:08:41", "title": "Galahad is a werewolf", "text": "Galahad will no turn into a werewolf every full moon"}
+],
+"characters": [
+{"name": "Howard the duck", "hp": "12", "ac": "2", "text": "This person is afraid of cats"},
+{"name": "Sir Nils", "hp": "30", "ac": "1", "text": "Brave and stupid"},
+{"name": "Galahad", "hp": "25", "ac": "2", "text": "Good at jousting"},
+{"name": "Glorfindel", "hp": "18", "ac": "1", "text": "Good with the bow"}
+],
+"randomevents": [
+{"title": "Rat", "distmin": "50", "distmax": "100", "hp": "8", "attitude": "2", "text": "Rat is carrying diseases"},
+{"title": "Tree is falling", "distmin": "0", "distmax": "0", "hp": "0", "attitude": "0", "text": "Falling tree in the woods"},
+{"title": "Movement in bushes", "distmin": "0", "distmax": "0", "hp": "0", "attitude": "0", "text": "Movement and sounds in the bushes which runs away when approached"},
+{"title": "Ghost", "distmin": "50", "distmax": "200", "hp": "38", "attitude": "1", "text": "Ghost has armor and sword"},
+{"title": "Warrior", "distmin": "10", "distmax": "30", "hp": "28", "attitude": "0", "text": "Warriors patrolling streets"}
+],
+"environments": [
+{"title": "Creepy wood", "timeidx": "2", "randomevents": [{"title": "Tree is falling"},{"title": "Movement in bushes"},{"title": "Warrior"}]},
+{"title": "City of Llamar", "timeidx": "1", "randomevents": [{"title": "Rat"},{"title": "Ghost"}]}
+]}

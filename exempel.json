@@ -1,0 +1,27 @@
+{
+"time": "2023-01-01 16:38:41",
+"weatherindex": "0",
+"weathertime": "2023-01-01 21:38:41",
+"events": [
+{"when": "2023-01-01 17:08:41", "title": "Howard förgiftning", "text": "Howard blev förgiftad och symtom börjar visa sig"},
+{"when": "2023-01-02 16:38:51", "title": "Kungens tidsfrist", "text": "Kungens tid har gått ut för att klara uppdraget"},
+{"when": "2023-01-01 17:35:41", "title": "Trollet kommer tillbaka", "text": "Trollet är nu tillbaka i hemmet"},
+{"when": "2023-01-01 17:08:41", "title": "Galahad blir varulv", "text": "Galahad kommer nu förvandlas till varulv när det är fullmåne"}
+],
+"characters": [
+{"name": "Ankan Howard", "hp": "12", "ac": "2", "text": "Denna person är rädd för katter"},
+{"name": "Sir Nils", "hp": "30", "ac": "1", "text": "Modig och dum"},
+{"name": "Galahad", "hp": "25", "ac": "2", "text": "Bra på turnering"},
+{"name": "Glorfindel", "hp": "18", "ac": "1", "text": "Väldigt säker med bågen"}
+],
+"randomevents": [
+{"title": "Råtta", "distmin": "50", "distmax": "100", "hp": "8", "attitude": "2", "text": "Råttan är smittad och farlig"},
+{"title": "Trädet faller", "distmin": "0", "distmax": "0", "hp": "0", "attitude": "0", "text": "Fallande träd hörs i skogen"},
+{"title": "Prasslar i buskarna", "distmin": "0", "distmax": "0", "hp": "0", "attitude": "0", "text": "Prasslar och skyndar sig bort när rollpersonerna kommer nära"},
+{"title": "Gast", "distmin": "50", "distmax": "200", "hp": "38", "attitude": "1", "text": "Gasten har rustning och svärd"},
+{"title": "Krigare", "distmin": "10", "distmax": "30", "hp": "28", "attitude": "0", "text": "Krigaren går runt på gatorna"}
+],
+"environments": [
+{"title": "Läskiga skogen", "timeidx": "2", "randomevents": [{"title": "Trädet faller"},{"title": "Prasslar i buskarna"},{"title": "Krigare"}]},
+{"title": "Llamars Stad", "timeidx": "1", "randomevents": [{"title": "Råtta"},{"title": "Gast"}]}
+]}

@@ -16,7 +16,7 @@ import wx
 import datetime
 import Config
 #------------------------------------------------------------------------------
-class eventFrame(wx.Frame):
+class EventFrame(wx.Frame):
   panel = None
   tid = None
   tidtext = None
@@ -25,25 +25,23 @@ class eventFrame(wx.Frame):
   onOk = False
 #------------------------------------------------------------------------------
   def __init__(self):
-    super().__init__(None, title=Config.LANG.EVENT, size=(450, 470))
+    super().__init__(None, title=Config.LANG.EVENT, size=(370, 470))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
     self.panel.SetBackgroundColour(wx.Colour(230, 230, 255))
-    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.ROUND, (50, 50))
-    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TURN, (135, 50))
-    button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SHIFT, (220, 50))
+    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.ROUND, pos = (10, 50), size = (90,-1))
+    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TURN, pos = (100, 50), size = (90,-1))
+    button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SHIFT, pos = (190, 50), size = (90,-1))
     button1.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(seconds=10): self.onButton1(event, timediff) )
     button2.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(minutes=15): self.onButton1(event, timediff) )
     button3.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(hours=6): self.onButton1(event, timediff) )
-    lbl1 = wx.StaticText(self.panel, pos = (50, 100), size = (100,20), label = Config.LANG.TITLE)
+    lbl1 = wx.StaticText(self.panel, pos = (10, 100), size = (100,20), label = Config.LANG.TITLE)
     lbl1font = self.GetFont() 
     lbl1font.SetWeight(wx.BOLD)
     lbl1.SetFont(lbl1font)
-    lbl2 = wx.StaticText(self.panel, pos = (50, 160), size = (100,20), label = Config.LANG.EVENT)
-    lbl2font = self.GetFont() 
-    lbl2font.SetWeight(wx.BOLD)
-    lbl2.SetFont(lbl2font)
-    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.OK, (130, 390))
+    lbl2 = wx.StaticText(self.panel, pos = (10, 160), size = (100,20), label = Config.LANG.EVENT)
+    lbl2.SetFont(lbl1font)
+    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.OK, (30, 390))
     button5 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.CANCEL, (230, 390))
     button4.Bind(wx.EVT_BUTTON, self.onButton4) 
     button5.Bind(wx.EVT_BUTTON, self.onButton5) 
@@ -51,14 +49,14 @@ class eventFrame(wx.Frame):
   def setTime(self, tid):
     self.tid = tid
     self.printTime()
-    self.titletext = wx.TextCtrl(self.panel, wx.ID_ANY, '', pos = (50, 120), size=(350, -1))
-    self.eventtext = wx.TextCtrl(self.panel, wx.ID_ANY, '', pos = (50, 180), size=(350, 200), style= wx.TE_MULTILINE)
+    self.titletext = wx.TextCtrl(self.panel, wx.ID_ANY, '', pos = (10, 120), size=(350, -1))
+    self.eventtext = wx.TextCtrl(self.panel, wx.ID_ANY, '', pos = (10, 180), size=(350, 200), style= wx.TE_MULTILINE)
 #------------------------------------------------------------------------------
   def setValues(self, tid, title, text):
     self.tid = tid
     self.printTime()
-    self.titletext = wx.TextCtrl(self.panel, wx.ID_ANY, title, pos = (50, 120), size=(350, -1))
-    self.eventtext = wx.TextCtrl(self.panel, wx.ID_ANY, text, pos = (50, 180), size=(350, 200), style= wx.TE_MULTILINE)
+    self.titletext = wx.TextCtrl(self.panel, wx.ID_ANY, title, pos = (10, 120), size=(350, -1))
+    self.eventtext = wx.TextCtrl(self.panel, wx.ID_ANY, text, pos = (10, 180), size=(350, 200), style= wx.TE_MULTILINE)
 #------------------------------------------------------------------------------
   def onButton1(self, event, timediff):
     self.tid = self.tid + timediff
@@ -75,5 +73,5 @@ class eventFrame(wx.Frame):
     if not self.tidtext == None:
       self.tidtext.Destroy()
     dt = Config.LANG.WEEKDAY[self.tid.weekday()] + ' ' + Config.TIMEFORMAT
-    self.tidtext = wx.StaticText(self.panel, pos = (50, 30), label = self.tid.strftime(dt))
+    self.tidtext = wx.StaticText(self.panel, pos = (10, 20), label = self.tid.strftime(dt))
 #------------------------------------------------------------------------------

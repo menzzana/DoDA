@@ -12,34 +12,36 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
-JSONCHARACTER = '{\"name\": \"%s\", \"hp\": \"%s\", \"ac\": \"%s\", \"text\": \"%s\"}%s'
-JSONCHARACTERS = '\"characters\": [\n'
+JSONRANDOMEVENT = '{\"title\": \"%s\", \"distmin\": \"%s\", \"distmax\": \"%s\", \"hp\": \"%s\", \"attitude\": \"%s\", \"text\": \"%s\"}%s'
+JSONRANDOMEVENTS = '\"randomevents\": [\n'
 #------------------------------------------------------------------------------
-class Characters:
-  name = None
+class RandomEvents:
+  title = None
+  distmin = None
+  distmax = None
   hp = None
-  ac = None
+  attitude = None
   text = None
 #------------------------------------------------------------------------------
-  def __init__(self, name, hp, ac, text):
-    self.name = name
+  def __init__(self, title, distmin, distmax, hp, attitude, text):
+    self.title = title
+    self.distmin = distmin
+    self.distmax = distmax
+    self.attitude = attitude
     self.hp = hp
-    self.ac = ac
     self.text = text
 #------------------------------------------------------------------------------
   def jsonSaveHeader():
-    return JSONCHARACTERS
+    return JSONRANDOMEVENTS
 #------------------------------------------------------------------------------
   def jsonSave(self, last):
     if last:
       ending = '\n]'
     else:
       ending = ',\n'
-    return JSONCHARACTER % (self.name, self.hp, self.ac, self.text, ending)
+    return JSONRANDOMEVENT % (self.title, self.distmin, self.distmax, self.hp, self.attitude, self.text, ending)
 #------------------------------------------------------------------------------
   @classmethod
   def jsonLoad(cls, data):
-    return cls(data['name'], int(data['hp']), int(data['ac']), data['text'])
+    return cls(data['title'], int(data['distmin']), int(data['distmax']), int(data['hp']), int(data['attitude']), data['text'])
 #------------------------------------------------------------------------------
-
-

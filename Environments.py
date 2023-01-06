@@ -12,34 +12,43 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
-JSONCHARACTER = '{\"name\": \"%s\", \"hp\": \"%s\", \"ac\": \"%s\", \"text\": \"%s\"}%s'
-JSONCHARACTERS = '\"characters\": [\n'
+JSONENVIRONMENT = '{\"title\": \"%s\", \"timeidx\": \"%s\", \"randomevents\": ['
+JSONENVIRONMENTS = '\"environments\": [\n'
+JSONENVIRONMENTTITLE = '{\"title\": \"%s\"}'
 #------------------------------------------------------------------------------
-class Characters:
-  name = None
-  hp = None
-  ac = None
-  text = None
+class Environments:
+  title = None
+  timeidx = None
+  randomeventtitles = []
 #------------------------------------------------------------------------------
-  def __init__(self, name, hp, ac, text):
-    self.name = name
-    self.hp = hp
-    self.ac = ac
-    self.text = text
+  def __init__(self, title, timeidx, randomeventtitles):
+    self.title = title
+    self.timeidx = timeidx
+    self.randomeventtitles = randomeventtitles
 #------------------------------------------------------------------------------
   def jsonSaveHeader():
-    return JSONCHARACTERS
+    return JSONENVIRONMENTS
 #------------------------------------------------------------------------------
   def jsonSave(self, last):
     if last:
       ending = '\n]'
     else:
       ending = ',\n'
-    return JSONCHARACTER % (self.name, self.hp, self.ac, self.text, ending)
+    data = JSONENVIRONMENT % (self.title, self.timeidx)
+    for idx, ev in enumerate(self.randomeventtitles):
+      data = data + JSONENVIRONMENTTITLE % ev
+      if idx < len(self.randomeventtitles) - 1:
+        data = data + ','
+    if last:
+      data = data + ']}\n'
+    else:
+      data = data + ']},\n'
+    return data
 #------------------------------------------------------------------------------
   @classmethod
   def jsonLoad(cls, data):
-    return cls(data['name'], int(data['hp']), int(data['ac']), data['text'])
+    eventtitles = []
+    for i in data['randomevents']:
+      eventtitles.append(i['title'])
+    return cls(data['title'], int(data['timeidx']), eventtitles)
 #------------------------------------------------------------------------------
-
-

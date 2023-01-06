@@ -17,7 +17,7 @@ import datetime
 import os
 import sys
 import Config
-from mainFrame import mainFrame
+from MainFrame import MainFrame
 #------------------------------------------------------------------------------
 def main():
   Config.LANG = Config.Swedish()
@@ -26,7 +26,7 @@ def main():
       Config.LANG = Config.English()
   Config.SOFTWARENAME = Config.SOFTWARENAME + "-" + os.popen(Config.LASTCOMMIT).read()
   app = wx.App()
-  mainframe = mainFrame(None, Config.SOFTWARENAME)
+  mainframe = MainFrame(None, Config.SOFTWARENAME)
   mainframe.Show()
   app.MainLoop()
 #------------------------------------------------------------------------------

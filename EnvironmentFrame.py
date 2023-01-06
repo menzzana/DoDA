@@ -13,48 +13,37 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
 import wx
-import datetime
 import Config
 #------------------------------------------------------------------------------
-class charFrame(wx.Frame):
+class EnvironmentFrame(wx.Frame):
   panel = None
-  nametext = None
-  actext = None
-  wptext = None
-  chartext = None
+  titletext = None
+  timeidx = None
   onOk = False
 #------------------------------------------------------------------------------
   def __init__(self):
-    super().__init__(None, title=Config.LANG.EVENT, size=(450, 470))
+    super().__init__(None, title=Config.LANG.RANDOMEVENTTEXT, size=(400, 180))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
     self.panel.SetBackgroundColour(wx.Colour(230, 230, 255))
-    lbl1 = wx.StaticText(self.panel, pos = (50, 30), size = (150,20), label = Config.LANG.CHARNAME)
+    lbl1 = wx.StaticText(self.panel, pos = (10, 30), size = (150,20), label = Config.LANG.TITLE)
     lbl1font = self.GetFont() 
     lbl1font.SetWeight(wx.BOLD)
     lbl1.SetFont(lbl1font)
-    lbl2 = wx.StaticText(self.panel, pos = (50, 65), size = (150,20), label = Config.LANG.CHARAC)
-    lbl2font = self.GetFont() 
-    lbl2font.SetWeight(wx.BOLD)
-    lbl2.SetFont(lbl2font)
-    lbl3 = wx.StaticText(self.panel, pos = (50, 100), size = (150,20), label = Config.LANG.CHARWP)
-    lbl3font = self.GetFont() 
-    lbl3font.SetWeight(wx.BOLD)
-    lbl3.SetFont(lbl3font)
-    lbl4 = wx.StaticText(self.panel, pos = (50, 135), size = (150,20), label = Config.LANG.CHARTEXT)
-    lbl4font = self.GetFont() 
-    lbl4font.SetWeight(wx.BOLD)
-    lbl4.SetFont(lbl4font)
-    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.OK, (130, 390))
-    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.CANCEL, (230, 390))
+    lbl2 = wx.StaticText(self.panel, pos = (10, 65), size = (150,20), label = Config.LANG.FREQUENCY)
+    lbl2.SetFont(lbl1font)
+    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.OK,  pos = (40, 110))
+    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.CANCEL, pos = (230, 110))
     button1.Bind(wx.EVT_BUTTON, self.onButton1) 
     button2.Bind(wx.EVT_BUTTON, self.onButton2)     
 #------------------------------------------------------------------------------
-  def setValues(self, name, ac, wp, text):
-    self.nametext = wx.TextCtrl(self.panel, wx.ID_ANY, name, pos = (150, 25), size=(250, -1))
-    self.actext = wx.TextCtrl(self.panel, wx.ID_ANY, str(ac), pos = (150, 60), size=(250, -1))
-    self.wptext = wx.TextCtrl(self.panel, wx.ID_ANY, str(wp), pos = (150, 95), size=(250, -1))
-    self.chartext = wx.TextCtrl(self.panel, wx.ID_ANY, text, pos = (50, 160), size=(350, 200), style= wx.TE_MULTILINE)
+  def setClearValues(self):
+    self.setValues('', 0)
+#------------------------------------------------------------------------------
+  def setValues(self, title, timeidx):
+    self.titletext = wx.TextCtrl(self.panel, wx.ID_ANY, title, pos = (150, 25), size=(240, -1))
+    self.timeidx = wx.ComboBox(self.panel, choices=Config.LANG.TIMES, pos = (150, 60), size=(240, -1), style = wx.LB_SINGLE)
+    self.timeidx.SetSelection(timeidx)
 #------------------------------------------------------------------------------
   def onButton1(self, event):
     self.onOk = True
@@ -63,4 +52,3 @@ class charFrame(wx.Frame):
   def onButton2(self, event):
     self.Hide()
 #------------------------------------------------------------------------------
-
