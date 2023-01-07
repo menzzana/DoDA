@@ -223,7 +223,9 @@ class MainFrame(wx.Frame):
         attitude = Config.LANG.ATTITUDES[self.randomevents[idx].attitude]
       else:
         attitude = Config.LANG.ATTITUDES[random.randrange(1,len(Config.LANG.ATTITUDES))]
-      numbers = int(sum(c.hp for c in self.characters)*Config.HPRANGE/self.randomevents[idx].hp)
+      numbers = int(sum(c.hp for c in self.characters)*random.random()*Config.HPRANGE/self.randomevents[idx].hp)
+      if numbers == 0:
+        numbers = 1
       encountertext = Config.LANG.ENCOUNTERTEXT %  (self.randomevents[idx].title,
         numbers,
         self.randomevents[idx].hp,
