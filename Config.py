@@ -13,7 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
 LANG = None
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 SOFTWARENAME = "DoDA v" + VERSION
 LASTCOMMIT = 'git log -n 1 --pretty=format:%h'
 DATEFORMAT = '%Y-%m-%d'
@@ -87,7 +87,6 @@ class Swedish:
   DISTANCE = 'Avstånd'
   ATTITUDE = 'Attityd'
   ATTITUDES = ['Slump', 'Fientlig', 'Undvikande', 'Likgiltig', 'Vänlig']
-  DUPLICATERANDOMEVENT = 'Detta slumvisa möte finns redan'
   RANDOMEVENTENCOUNTERTEXT = 'Titel: %s\nHändelse\n%s\n'
   ENCOUNTERTEXT = 'Monster: %s\nAntal: %s\nKroppspoäng: %s\nAvstånd: %s\nAttityd: %s\nUpptäckt: %s\n\nInformation\n %s\n'
   YES = 'Ja'
@@ -144,7 +143,6 @@ class English:
   DISTANCE = 'Distance'
   ATTITUDE = 'Attitude'
   ATTITUDES = ['Random', 'Hostile', 'Avoidant', 'Indifferent', 'Friendly']
-  DUPLICATERANDOMEVENT = 'Duplicate random event'
   RANDOMEVENTENCOUNTERTEXT = 'Title: %s\nEvent\n %s\n'
   ENCOUNTERTEXT = 'Monster: %s\nNumbers: %s\nHitpoints: %s\nDistance: %s\nAttitude: %s\nDiscovered: %s\n\nInformation\n%s\n'
   YES = 'Yes'

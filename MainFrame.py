@@ -115,9 +115,9 @@ class MainFrame(wx.Frame):
     self.environmentlist.Append(Config.LANG.NONE)
     self.environmentlist.SetSelection(0)
     self.environmentlist.Bind(wx.EVT_COMBOBOX, self.onComboBoxChange)
-    self.randomeventlist = wx.ListBox(self.panel, size = (300,360), choices=[], pos=(630,170), style = wx.LB_MULTIPLE)
+    self.randomeventlist = wx.CheckListBox(self.panel, size = (300,360), choices=[], pos=(630,170), style = wx.LB_SINGLE)
     self.randomeventlist.Bind(wx.EVT_LISTBOX_DCLICK, self.onDblClickRandomEventBox)
-    self.randomeventlist.Bind(wx.EVT_LISTBOX, self.onClickRandomEventBox)
+    self.randomeventlist.Bind(wx.EVT_CHECKLISTBOX, self.onCheckRandomEventBox)
     self.printTime()
 #------------------------------------------------------------------------------
   def onButton1(self, event, timediff, timeidx):
@@ -213,9 +213,9 @@ class MainFrame(wx.Frame):
     self.doRandomEvent()
 #------------------------------------------------------------------------------
   def doRandomEvent(self):
-    if len(self.randomeventlist.GetSelections()) <= 0:
+    if len(self.randomeventlist.GetCheckedItems()) <= 0:
       return
-    idx = self.randomeventlist.GetSelections()[random.randrange(0,len(self.randomeventlist.GetSelections()))]
+    idx = self.randomeventlist.GetCheckedItems()[random.randrange(0,len(self.randomeventlist.GetCheckedItems()))]
     if self.randomevents[idx].hp == 0:
       encountertext = Config.LANG.RANDOMEVENTENCOUNTERTEXT %  (self.randomevents[idx].title, self.randomevents[idx].text)
     else:
@@ -253,21 +253,24 @@ class MainFrame(wx.Frame):
     while randomeventframe.IsShown():
       wx.GetApp().Yield()
     if randomeventframe.onOk:
-      if self.randomeventlist.FindString(randomeventframe.titletext.GetValue()) < 0:
-        self.randomevents.append(RandomEvents.RandomEvents(randomeventframe.titletext.GetValue(),
-          int(randomeventframe.distmintext.GetValue()),int(randomeventframe.distmaxtext.GetValue()),
-          int(randomeventframe.hptext.GetValue()), randomeventframe.attitudeidx.GetSelection(), 
-          randomeventframe.text.GetValue()))
-        self.randomeventlist.Append(self.randomevents[self.randomeventlist.GetCount()].title)
-      else:
-        wx.MessageBox(Config.LANG.DUPLICATERANDOMEVENT, Config.SOFTWARENAME, style=wx.ICON_NONE)
+      self.randomevents.append(RandomEvents.RandomEvents(randomeventframe.titletext.GetValue(),
+        int(randomeventframe.distmintext.GetValue()),int(randomeventframe.distmaxtext.GetValue()),
+        int(randomeventframe.hptext.GetValue()), randomeventframe.attitudeidx.GetSelection(), 
+        randomeventframe.text.GetValue()))
+      self.randomeventlist.Append(self.randomevents[self.randomeventlist.GetCount()].title)
     randomeventframe.Destroy()
 #------------------------------------------------------------------------------
   def deleteRandomEvent(self, event):
-    if self.randomeventlist.GetSelections()[0] < 0:
+    if self.randomeventlist.GetSelection() < 0:
       return
-    self.randomevents.pop(self.randomeventlist.GetSelections()[0])
-    self.randomeventlist.Delete(self.randomeventlist.GetSelections()[0])
+    for i in self.environments:
+      if self.randomeventlist.GetSelection() in i.randomeventidx:
+        i.randomeventidx.remove(self.randomeventlist.GetSelection())
+      for idx,i2 in enumerate(i.randomeventidx):
+        if i2 > self.randomeventlist.GetSelection():
+          i.randomeventidx[idx] = i.randomeventidx[idx] - 1
+    self.randomevents.pop(self.randomeventlist.GetSelection())
+    self.randomeventlist.Delete(self.randomeventlist.GetSelection())
 #------------------------------------------------------------------------------
   def deleteEnvironment(self, event):  
     if self.environmentlist.GetSelection() == 0:
@@ -278,7 +281,7 @@ class MainFrame(wx.Frame):
     self.removeEnvironmentSelection()
 #------------------------------------------------------------------------------
   def onDblClickListBox(self, event):
-    selection = self.eventlist.GetSelections()[0]
+    selection = self.eventlist.GetSelection()
     if selection < 0:
       return
     event = self.events[selection]
@@ -295,7 +298,7 @@ class MainFrame(wx.Frame):
     eventframe.Destroy()
 #------------------------------------------------------------------------------
   def onDblClickCharBox(self, event):
-    selection = self.characterlist.GetSelections()[0]
+    selection = self.characterlist.GetSelection()
     if selection < 0:
       return
     character = self.characters[selection]
@@ -313,7 +316,7 @@ class MainFrame(wx.Frame):
     charframe.Destroy()
 #------------------------------------------------------------------------------
   def onDblClickRandomEventBox(self, event):
-    selection = self.randomeventlist.GetSelections()[0]
+    selection = self.randomeventlist.GetSelection()
     if selection < 0:
       return
     randomevent = self.randomevents[selection]
@@ -332,21 +335,21 @@ class MainFrame(wx.Frame):
       self.randomeventlist.SetString(selection, randomevent.title)
     randomeventframe.Destroy()
 #------------------------------------------------------------------------------
-  def onClickRandomEventBox(self, event):
+  def onCheckRandomEventBox(self, event):
     if self.environmentlist.GetSelection() == 0:
       return
-    self.environments[self.environmentlist.GetSelection() - 1].randomeventtitles.clear()
-    titles = []
-    for i in self.randomeventlist.GetSelections():
-      titles.append(self.randomeventlist.GetString(i))
-    self.environments[self.environmentlist.GetSelection() - 1].randomeventtitles = titles
+    self.environments[self.environmentlist.GetSelection() - 1].randomeventidx.clear()
+    idxs = []
+    for i in self.randomeventlist.GetCheckedItems():
+      idxs.append(i)
+    self.environments[self.environmentlist.GetSelection() - 1].randomeventidx = idxs
 #------------------------------------------------------------------------------
   def onComboBoxChange(self, event):
     for idx in range(self.randomeventlist.GetCount()):
-      self.randomeventlist.Deselect(idx)
+      self.randomeventlist.Check(idx, False)
     if self.environmentlist.GetSelection() > 0:
-      for i in self.environments[self.environmentlist.GetSelection() - 1].randomeventtitles:
-        self.randomeventlist.SetStringSelection(i)
+      for i in self.environments[self.environmentlist.GetSelection() - 1].randomeventidx:
+        self.randomeventlist.Check(i, True)
 #------------------------------------------------------------------------------
   def editEnvironment(self, event):
     selection = self.environmentlist.GetSelection()

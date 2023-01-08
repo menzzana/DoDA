@@ -14,17 +14,17 @@
 #==============================================================================
 JSONENVIRONMENT = '{\"title\": \"%s\", \"timeidx\": \"%s\", \"randomevents\": ['
 JSONENVIRONMENTS = '\"environments\": [\n'
-JSONENVIRONMENTTITLE = '{\"title\": \"%s\"}'
+JSONENVIRONMENTIDX = '{\"idx\": \"%s\"}'
 #------------------------------------------------------------------------------
 class Environments:
   title = None
   timeidx = None
-  randomeventtitles = []
+  randomeventidx = []
 #------------------------------------------------------------------------------
   def __init__(self, title, timeidx, randomeventtitles):
     self.title = title
     self.timeidx = timeidx
-    self.randomeventtitles = randomeventtitles
+    self.randomeventidx = randomeventtitles
 #------------------------------------------------------------------------------
   def jsonSaveHeader():
     return JSONENVIRONMENTS
@@ -35,9 +35,9 @@ class Environments:
     else:
       ending = ',\n'
     data = JSONENVIRONMENT % (self.title, self.timeidx)
-    for idx, ev in enumerate(self.randomeventtitles):
-      data = data + JSONENVIRONMENTTITLE % ev
-      if idx < len(self.randomeventtitles) - 1:
+    for idx, ev in enumerate(self.randomeventidx):
+      data = data + JSONENVIRONMENTIDX % ev
+      if idx < len(self.randomeventidx) - 1:
         data = data + ','
     if last:
       data = data + ']}\n'
@@ -47,8 +47,10 @@ class Environments:
 #------------------------------------------------------------------------------
   @classmethod
   def jsonLoad(cls, data):
-    eventtitles = []
+    eventidxs = []
     for i in data['randomevents']:
-      eventtitles.append(i['title'])
-    return cls(data['title'], int(data['timeidx']), eventtitles)
+      if "title" in i:
+        break
+      eventidxs.append(int(i['idx']))
+    return cls(data['title'], int(data['timeidx']), eventidxs)
 #------------------------------------------------------------------------------
