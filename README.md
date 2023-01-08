@@ -32,6 +32,15 @@ For windows you need to install python. See more documentation at https://www.py
 For a swedish version just run **DoDA_win**
 In case you want to run an english version, just run **DoDA_win_eng**
 
+## MAC(OSX)
+
+* Install Python via the terminal
+  * Installera attrdict3 using *pip install attrdict3*
+  * Installera wxPython using *pip install wxPython*
+* Start program by double-clicking on **DoDA.py**, then click **Run** -> **Run Module**
+* Should be able to start the program by double-clicking **DoDA_win** or **DoDA_win_eng** as well
+
+
 ## How to use
 
 ### Time
