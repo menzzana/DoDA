@@ -345,6 +345,9 @@ class MainFrame(wx.Frame):
     self.environments[self.environmentlist.GetSelection() - 1].randomeventidx = idxs
 #------------------------------------------------------------------------------
   def onComboBoxChange(self, event):
+    self.checkRandomEvents()
+#------------------------------------------------------------------------------
+  def checkRandomEvents(self):  
     for idx in range(self.randomeventlist.GetCount()):
       self.randomeventlist.Check(idx, False)
     if self.environmentlist.GetSelection() > 0:
@@ -404,7 +407,7 @@ class MainFrame(wx.Frame):
           if ncount > 0:
             fp.write(',\n' + Environments.Environments.jsonSaveHeader())
             for idx, i in enumerate(self.environments):
-              fp.write(i.jsonSave(idx == ncount - 1))
+              fp.write(i.jsonSave(self.environmentlist.GetSelection() - 1 == idx, idx == ncount - 1))
             fp.write(']')
           fp.write('}\n')
         fp.close()
@@ -447,6 +450,9 @@ class MainFrame(wx.Frame):
         for i in data['environments']:
           self.environments.append(Environments.Environments.jsonLoad(i))
           self.environmentlist.Append(self.environments[self.environmentlist.GetCount() - 1].title)
+          if Environments.Environments.jsonSelected(i):
+            self.environmentlist.SetSelection(self.environmentlist.GetCount() - 1)
+            self.checkRandomEvents()
       except IOError:
         wx.LogError(Config.LANG.LOADERROR % pathname)
 #------------------------------------------------------------------------------

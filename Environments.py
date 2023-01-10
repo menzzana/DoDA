@@ -13,6 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
 JSONENVIRONMENT = '{\"title\": \"%s\", \"timeidx\": \"%s\", \"randomevents\": ['
+JSONENVIRONMENTSELECTED = '{\"title\": \"%s\", \"timeidx\": \"%s\", \"selected\": \"yes\", \"randomevents\": ['
 JSONENVIRONMENTS = '\"environments\": [\n'
 JSONENVIRONMENTIDX = '{\"idx\": \"%s\"}'
 #------------------------------------------------------------------------------
@@ -29,12 +30,15 @@ class Environments:
   def jsonSaveHeader():
     return JSONENVIRONMENTS
 #------------------------------------------------------------------------------
-  def jsonSave(self, last):
+  def jsonSave(self, selection, last):
     if last:
       ending = '\n]'
     else:
       ending = ',\n'
-    data = JSONENVIRONMENT % (self.title, self.timeidx)
+    if selection:
+      data = JSONENVIRONMENTSELECTED % (self.title, self.timeidx)
+    else:
+      data = JSONENVIRONMENT % (self.title, self.timeidx)
     for idx, ev in enumerate(self.randomeventidx):
       data = data + JSONENVIRONMENTIDX % ev
       if idx < len(self.randomeventidx) - 1:
@@ -53,4 +57,8 @@ class Environments:
         break
       eventidxs.append(int(i['idx']))
     return cls(data['title'], int(data['timeidx']), eventidxs)
+#------------------------------------------------------------------------------
+  @classmethod
+  def jsonSelected(cls, data):
+    return (True if "selected" in data else False)
 #------------------------------------------------------------------------------
