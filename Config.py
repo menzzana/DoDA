@@ -13,7 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
 LANG = None
-VERSION = "0.2.1"
+VERSION = "0.2.2"
 SOFTWARENAME = "DoDA v" + VERSION
 LASTCOMMIT = 'git log -n 1 --pretty=format:%h'
 DATEFORMAT = '%Y-%m-%d'

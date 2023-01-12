@@ -37,8 +37,9 @@ In case you want to run an english version, just run **DoDA_win_eng**
 * Install Python via the terminal
   * Installera attrdict3 using *pip install attrdict3*
   * Installera wxPython using *pip install wxPython*
-* Start program by double-clicking on **DoDA.py**, then click **Run** -> **Run Module**
-* Should be able to start the program by double-clicking **DoDA_win** or **DoDA_win_eng** as well
+* Should be able to start the program by double-clicking **DoDA_mac** or **DoDA_mac_eng** as well
+* Otherwise start program by double-clicking on **DoDA.py**, then click **Run** -> **Run Module**
+
 
 
 ## How to use
