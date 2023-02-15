@@ -99,7 +99,7 @@ class MainFrame(wx.Frame):
     lbl2 = wx.StaticText(self.panel, pos = (320, 150), size = (100,20), label = Config.LANG.CHARS)
     lbl3 = wx.StaticText(self.panel, pos = (10, 10), size=(50, 50), label = Config.LANG.TIMETEXT)
     lbl4 = wx.StaticText(self.panel, pos = (630, 150), size=(120, 50), label = Config.LANG.RANDOMEVENTTEXT)
-    lbl5 = wx.StaticText(self.panel, pos = (630, 70), size=(120, 50), label = Config.LANG.ENVIRONMENTS)
+    lbl5 = wx.StaticText(self.panel, pos = (630, 30), size=(120, 50), label = Config.LANG.ENVIRONMENTS)
     lbl1font = self.GetFont() 
     lbl1font.SetWeight(wx.BOLD)
     lbl1.SetFont(lbl1font)
@@ -111,10 +111,12 @@ class MainFrame(wx.Frame):
     self.eventlist.Bind(wx.EVT_LISTBOX_DCLICK, self.onDblClickListBox)
     self.characterlist = wx.ListBox(self.panel, size = (300,360), choices=[], pos=(320,170), style = wx.LB_SINGLE)
     self.characterlist.Bind(wx.EVT_LISTBOX_DCLICK, self.onDblClickCharBox)
-    self.environmentlist = wx.ComboBox(self.panel, size = (300, -1), choices=[], pos=(630,90), style = wx.LB_SINGLE)
+    self.environmentlist = wx.ComboBox(self.panel, size = (300, -1), choices=[], pos=(630,50), style = wx.LB_SINGLE)
     self.environmentlist.Append(Config.LANG.NONE)
     self.environmentlist.SetSelection(0)
     self.environmentlist.Bind(wx.EVT_COMBOBOX, self.onComboBoxChange)
+    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.DORANDOMEVENT, (630, 100))
+    button4.Bind(wx.EVT_BUTTON, self.onButton4) 
     self.randomeventlist = wx.CheckListBox(self.panel, size = (300,360), choices=[], pos=(630,170), style = wx.LB_SINGLE)
     self.randomeventlist.Bind(wx.EVT_LISTBOX_DCLICK, self.onDblClickRandomEventBox)
     self.randomeventlist.Bind(wx.EVT_CHECKLISTBOX, self.onCheckRandomEventBox)
@@ -210,6 +212,9 @@ class MainFrame(wx.Frame):
     self.characterlist.Delete(self.characterlist.GetSelection())
 #------------------------------------------------------------------------------
   def doRandomEventMenu(self, event):
+    self.doRandomEvent()
+#------------------------------------------------------------------------------
+  def onButton4(self, event):
     self.doRandomEvent()
 #------------------------------------------------------------------------------
   def doRandomEvent(self):
