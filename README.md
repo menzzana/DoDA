@@ -4,6 +4,8 @@
 This is an assistant that can be used to play the role-playing game Drakar och Demoner,
 named Dragonbane in english.
 
+![](https://user-images.githubusercontent.com/6664679/224726545-ea8e9444-1776-4867-b584-f44940959806.jpg)
+
 In order to run this assistant you need to
 install the python package **wax**
 
