@@ -19,7 +19,7 @@
 {"title": "Tree is falling", "distmin": "0", "distmax": "0", "hp": "0", "attitude": "0", "text": "Falling tree in the woods"},
 {"title": "Movement in bushes", "distmin": "0", "distmax": "0", "hp": "0", "attitude": "0", "text": "Movement and sounds in the bushes which runs away when approached"},
 {"title": "Ghost", "distmin": "50", "distmax": "200", "hp": "38", "attitude": "1", "text": "Ghost has armor and sword"},
-{"title": "Warrior", "distmin": "10", "distmax": "30", "hp": "28", "attitude": "0", "text": "Warriors patrolling streets"}
+{"title": "Warrior", "distmin": "10", "distmax": "30", "hp": "28", "attitude": "0", "text": "Warriors patrolling streets"},
 {"title": "Wolf", "distmin": "50", "distmax": "200", "hp": "10", "attitude": "0", "text": "Wolf looking for food"},
 {"title": "Troll", "distmin": "50", "distmax": "200", "hp": "38", "attitude": "1", "text": "Troll goes around its cave"}
 ],
