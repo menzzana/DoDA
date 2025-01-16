@@ -156,7 +156,7 @@ class MainFrame(wx.Frame):
     tidinfo = tidinfo + Config.LANG.MOONPHASES[phase]
     self.tidtext = wx.StaticText(self.panel, pos = (110, 10), label = tidinfo)
     self.checkEvents()
-    if random.random() > Config.CHANCEENCOUNTER:
+    if random.random() < Config.CHANCEENCOUNTER:
       if self.environmentlist.GetSelection() > 0:
         if self.timeidx == self.environments[self.environmentlist.GetSelection() - 1].timeidx:
           self.doRandomEvent()
@@ -238,7 +238,7 @@ class MainFrame(wx.Frame):
         self.randomevents[idx].hp,
         random.randrange(self.randomevents[idx].distmin, self.randomevents[idx].distmax),
         attitude,
-        Config.LANG.YES if random.random() > Config.DISCOVEREDENCOUNTER else Config.LANG.NO,
+        Config.LANG.YES if random.random() < Config.DISCOVEREDENCOUNTER else Config.LANG.NO,
         self.randomevents[idx].text)
     wx.MessageBox(encountertext, Config.LANG.DORANDOMEVENT, style=wx.ICON_NONE)
 #------------------------------------------------------------------------------

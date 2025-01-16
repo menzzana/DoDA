@@ -30,9 +30,9 @@ WEATHERTIME = 6
 # Sun variables
 DAYTIMELIMIT = ['5:00', '7:00', '17:00', '19:00']
 # Random encounter ratio
-CHANCEENCOUNTER = 0.5
+CHANCEENCOUNTER = 0.2
 # Chance of discovery during encounter ratio
-DISCOVEREDENCOUNTER = 0.5
+DISCOVEREDENCOUNTER = 0.4
 # Ratio of hitpoint range for random monsters multiplied with party hp
 HPRANGE = 1.2
 #------------------------------------------------------------------------------

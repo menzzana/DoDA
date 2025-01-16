@@ -87,9 +87,34 @@ If you change environment the selected random events will shift according. altho
 will be selected when using No environment.
 When progressing in time during the adventure a random event will be chosen depending on the time settings
 on the selected environment.
-There is then a chance of 50% of a random event occuring.
 
-### Configuration
+## Configuration
 
 There is no configuration per se in the software, but many parameters can be set by editing the
 file *config.py*
+
+### Weather
+
+The variable **WEATHERRATIO** is a list of ratios for
+different weather situations. You can examine the **WEATHER** variable
+to see which ones are connected to each value. The sum of the values is 1.
+
+### Encounters
+
+The variable **CHANCEENCOUNTER** describes the ratio for a random encounter happening.
+By default this is set to 0.2 aka 20% chance of having a random encounter in a given selected
+timeframe for the environment.
+
+### Risk of being discovered
+
+The variable **DISCOVEREDENCOUNTER** describes the ratio for being discovered during a random encounter happening.
+By default this is set to 0.4 aka 40% chance of being discovered.
+
+### Strength of wandering monsters
+
+The variable **HPRANGE** describes the strength of the wandering monster party.
+Each monster has a specific hitpoints which also the character have.
+The number of monsters facing the characters is equal to the sum of the hitpoints for
+the party divided by the monsters hitpoints multiplied by **HPRANGE**.
+
+[Number of monsters]=[Sum Party HP]*HPRANGE/[Monster HP]
