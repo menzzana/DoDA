@@ -24,6 +24,8 @@ def main():
   if len(sys.argv)>1:
     if sys.argv[1] == 'eng':
       Config.LANG = Config.English()
+    if sys.argv[1] == 'dnd':
+      Config.LANG = Config.DnD()
   Config.SOFTWARENAME = Config.SOFTWARENAME + "-" + os.popen(Config.LASTCOMMIT).read()
   app = wx.App()
   mainframe = MainFrame(None, Config.SOFTWARENAME)

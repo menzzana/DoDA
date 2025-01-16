@@ -89,12 +89,14 @@ class MainFrame(wx.Frame):
     self.SetMenuBar(menubar)
     self.tid = datetime.datetime.now()
     self.weathertime = self.tid
-    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.ROUND, pos = (10, 90), size = (90,-1))
-    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TURN, pos = (100, 90), size = (90,-1))
-    button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SHIFT, pos = (190, 90), size = (90,-1))
-    button1.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(seconds=10), timeidx = 0: self.onButton1(event, timediff, timeidx) )
-    button2.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(minutes=15), timeidx = 1: self.onButton1(event, timediff, timeidx) )
-    button3.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(hours=6), timeidx = 2: self.onButton1(event, timediff, timeidx) )  
+    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TIMES[0], pos = (10, 90), size = (90,-1))
+    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TIMES[1], pos = (100, 90), size = (90,-1))
+    button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TIMES[2], pos = (190, 90), size = (90,-1))
+    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TIMES[3], pos = (280, 90), size = (90,-1))
+    button1.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(**Config.LANG.TIMEDIFF[0]), timeidx = 0: self.onButton1(event, timediff, timeidx) )
+    button2.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(**Config.LANG.TIMEDIFF[1]), timeidx = 1: self.onButton1(event, timediff, timeidx) )
+    button3.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(**Config.LANG.TIMEDIFF[2]), timeidx = 2: self.onButton1(event, timediff, timeidx) )  
+    button4.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(**Config.LANG.TIMEDIFF[3]), timeidx = 3: self.onButton1(event, timediff, timeidx) )  
     lbl1 = wx.StaticText(self.panel, pos = (10, 150), size = (100,20), label = Config.LANG.EVENTS)
     lbl2 = wx.StaticText(self.panel, pos = (320, 150), size = (100,20), label = Config.LANG.CHARS)
     lbl3 = wx.StaticText(self.panel, pos = (10, 10), size=(50, 50), label = Config.LANG.TIMETEXT)
@@ -115,8 +117,8 @@ class MainFrame(wx.Frame):
     self.environmentlist.Append(Config.LANG.NONE)
     self.environmentlist.SetSelection(0)
     self.environmentlist.Bind(wx.EVT_COMBOBOX, self.onComboBoxChange)
-    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.DORANDOMEVENT, (630, 100))
-    button4.Bind(wx.EVT_BUTTON, self.onButton4) 
+    button5 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.DORANDOMEVENT, (630, 100))
+    button5.Bind(wx.EVT_BUTTON, self.onButton5) 
     self.randomeventlist = wx.CheckListBox(self.panel, size = (300,360), choices=[], pos=(630,170), style = wx.LB_SINGLE)
     self.randomeventlist.Bind(wx.EVT_LISTBOX_DCLICK, self.onDblClickRandomEventBox)
     self.randomeventlist.Bind(wx.EVT_CHECKLISTBOX, self.onCheckRandomEventBox)
@@ -214,7 +216,7 @@ class MainFrame(wx.Frame):
   def doRandomEventMenu(self, event):
     self.doRandomEvent()
 #------------------------------------------------------------------------------
-  def onButton4(self, event):
+  def onButton5(self, event):
     self.doRandomEvent()
 #------------------------------------------------------------------------------
   def doRandomEvent(self):

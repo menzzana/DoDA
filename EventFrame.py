@@ -25,26 +25,28 @@ class EventFrame(wx.Frame):
   onOk = False
 #------------------------------------------------------------------------------
   def __init__(self):
-    super().__init__(None, title=Config.LANG.EVENT, size=(370, 470))
+    super().__init__(None, title=Config.LANG.EVENT, size=(380, 470))
     self.Centre()
     self.panel = wx.Panel(self, wx.ID_ANY)
     self.panel.SetBackgroundColour(wx.Colour(230, 230, 255))
-    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.ROUND, pos = (10, 50), size = (90,-1))
-    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TURN, pos = (100, 50), size = (90,-1))
-    button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.SHIFT, pos = (190, 50), size = (90,-1))
-    button1.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(seconds=10): self.onButton1(event, timediff) )
-    button2.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(minutes=15): self.onButton1(event, timediff) )
-    button3.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(hours=6): self.onButton1(event, timediff) )
+    button1 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TIMES[0], pos = (10, 50), size = (90,-1))
+    button2 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TIMES[1], pos = (100, 50), size = (90,-1))
+    button3 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TIMES[2], pos = (190, 50), size = (90,-1))
+    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.TIMES[3], pos = (280, 50), size = (90,-1))
+    button1.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(**Config.LANG.TIMEDIFF[0]): self.onButton1(event, timediff) )
+    button2.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(**Config.LANG.TIMEDIFF[1]): self.onButton1(event, timediff) )
+    button3.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(**Config.LANG.TIMEDIFF[2]): self.onButton1(event, timediff) )
+    button4.Bind(wx.EVT_BUTTON, lambda event, timediff=datetime.timedelta(**Config.LANG.TIMEDIFF[3]): self.onButton1(event, timediff) )
     lbl1 = wx.StaticText(self.panel, pos = (10, 100), size = (100,20), label = Config.LANG.TITLE)
     lbl1font = self.GetFont() 
     lbl1font.SetWeight(wx.BOLD)
     lbl1.SetFont(lbl1font)
     lbl2 = wx.StaticText(self.panel, pos = (10, 160), size = (100,20), label = Config.LANG.EVENT)
     lbl2.SetFont(lbl1font)
-    button4 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.OK, (30, 390))
-    button5 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.CANCEL, (230, 390))
-    button4.Bind(wx.EVT_BUTTON, self.onButton4) 
+    button5 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.OK, (30, 390))
+    button6 = wx.Button(self.panel, wx.ID_ANY, Config.LANG.CANCEL, (230, 390))
     button5.Bind(wx.EVT_BUTTON, self.onButton5) 
+    button6.Bind(wx.EVT_BUTTON, self.onButton6) 
 #------------------------------------------------------------------------------
   def setTime(self, tid):
     self.tid = tid
@@ -62,11 +64,11 @@ class EventFrame(wx.Frame):
     self.tid = self.tid + timediff
     self.printTime()
 #------------------------------------------------------------------------------
-  def onButton4(self, event):
+  def onButton5(self, event):
     self.onOk = True
     self.Hide()
 #------------------------------------------------------------------------------
-  def onButton5(self, event):
+  def onButton6(self, event):
     self.Hide()
 #------------------------------------------------------------------------------
   def printTime(self):

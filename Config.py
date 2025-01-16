@@ -13,7 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
 LANG = None
-VERSION = "0.2.2"
+VERSION = "0.9.0"
 SOFTWARENAME = "DoDA v" + VERSION
 LASTCOMMIT = 'git log -n 1 --pretty=format:%h'
 DATEFORMAT = '%Y-%m-%d'
@@ -37,10 +37,18 @@ DISCOVEREDENCOUNTER = 0.5
 HPRANGE = 1.2
 #------------------------------------------------------------------------------
 class Swedish:
-  ROUND = 'Runda'
-  TURN = 'Kvart'
-  SHIFT = 'Skift'
-  TIMES = [ROUND, TURN, SHIFT]
+  TIMES = [
+    'Runda',
+    'Kvart',
+    'Skift',
+    'Dag'
+    ]
+  TIMEDIFF = [
+    {"seconds": 10},
+    {"minutes": 15},
+    {"hours": 6},
+    {"days": 1}
+    ]
   FREQUENCY = 'Frekvens'
   SETTIME = 'Ställ in tid'
   EVENTS = 'Händelser'
@@ -93,10 +101,18 @@ class Swedish:
   NO = 'Nej'
 #------------------------------------------------------------------------------
 class English:
-  ROUND = 'Round'
-  TURN = 'Stretch'
-  SHIFT = 'Shift'
-  TIMES = [ROUND, TURN, SHIFT]
+  TIMES = [
+    'Round',
+    'Stretch',
+    'Shift',
+    'Day'
+    ]
+  TIMEDIFF = [
+    {"seconds": 10},
+    {"minutes": 15},
+    {"hours": 6},
+    {"days": 1}
+    ]
   FREQUENCY = 'Frequency'
   SETTIME = 'Set time'
   EVENTS = 'Events'
@@ -124,6 +140,70 @@ class English:
   MENYHELP = 'Help'
   MENYEDIT = '&Edit'
   INFORMATION = 'Dragonbane Assistant.\nMore information at https://github.com/menzzana/DoDA.\nDeveloped by Henric Zazzi'
+  SAVEERROR = 'Cannot save to %s.'
+  LOADERROR = 'Cannot open %s.'
+  WEEKDAY = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  WEATHER = ['Clear', 'Partially cloudy', 'Cloudy', 'Rain', 'Fog', 'Storm', 'Thunderstorm']
+  MOONPHASES = ['New Moon', 'Waxing Crescent', 'First Quarter', 'Waxing Gibbous', 'Full Moon', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent']
+  TIMETEXT = 'Date:\nTime:\nWeather:\nMoonphase:'
+  SUNTEXT = ['Dawn', 'Day', 'Dusk', 'Night']
+  RANDOMEVENTTEXT = 'Random events'
+  ENVIRONMENTS = 'Environments'
+  NEWENVIRONMENT = 'New environment'
+  EDITENVIRONMENT = 'Edit environment'
+  DELENVIRONMENT = 'Delete environment'
+  DORANDOMEVENT = 'Random event'
+  NEWRANDOMEVENT = 'New random event'
+  DELRANDOMEVENT = 'Delete random event'
+  NONE = 'None'
+  DISTANCE = 'Distance'
+  ATTITUDE = 'Attitude'
+  ATTITUDES = ['Random', 'Hostile', 'Avoidant', 'Indifferent', 'Friendly']
+  RANDOMEVENTENCOUNTERTEXT = 'Title: %s\nEvent\n %s\n'
+  ENCOUNTERTEXT = 'Monster: %s\nNumbers: %s\nHitpoints: %s\nDistance: %s\nAttitude: %s\nDiscovered: %s\n\nInformation\n%s\n'
+  YES = 'Yes'
+  NO = 'No'
+#------------------------------------------------------------------------------
+class DnD:
+  TIMES = [
+    'Round',
+    '10 minutes',
+    'Hour',
+    'Day'
+    ]
+  TIMEDIFF = [
+    {"seconds": 6},
+    {"minutes": 10},
+    {"hours": 1},
+    {"days": 1},
+    ]
+  FREQUENCY = 'Frequency'
+  SETTIME = 'Set time'
+  EVENTS = 'Events'
+  NEWEVENT = 'New Event'
+  TIMEFORMATTITLE = 'Time (YYYY-MM-DD HH:MM:SS)'
+  DELEVENT = 'Delete event'
+  EVENT = 'Event'
+  CHARS = 'Character'
+  NEWCHAR = 'New character'
+  DELCHAR = 'Delete character'
+  NAME = 'Name'
+  CHARHP = 'HP'
+  CHARAC = 'AC'
+  CHARWP = 'Willpower'
+  CHARTEXT = 'Playerinformation'
+  OK = 'Ok'
+  CANCEL = 'Cancel'
+  TITLE = 'Title'
+  MENYTEXT = '&File'
+  MENYOPEN = 'Open'
+  MENYSAVE = 'Save'
+  MENYCONF = 'Configuration'
+  MENYQUIT = 'Quit'
+  MENYABOUT = 'About'
+  MENYHELP = 'Help'
+  MENYEDIT = '&Edit'
+  INFORMATION = 'Dungeon & Dragons Assistant.\nMore information at https://github.com/menzzana/DoDA.\nDeveloped by Henric Zazzi'
   SAVEERROR = 'Cannot save to %s.'
   LOADERROR = 'Cannot open %s.'
   WEEKDAY = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']

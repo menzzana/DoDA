@@ -1,8 +1,8 @@
 # DoDA
-## An Assistant for Dragonbane (Drakar och Demoner) roleplaying game
+## An Assistant for Dragonbane (Drakar och Demoner) and Dungeon&Dragons roleplaying game
 
 This is an assistant that can be used to play the role-playing game Drakar och Demoner,
-named Dragonbane in english.
+named Dragonbane in english, and Dungeon&Dragons
 
 ![](https://user-images.githubusercontent.com/6664679/224726545-ea8e9444-1776-4867-b584-f44940959806.jpg)
 
@@ -20,8 +20,10 @@ On Linux/Unix distribution this is oftenly default, but
 You also need wxPython for the GUI to work. Installation instructions
 for this can be found at https://www.wxpython.org/pages/downloads/
 
+By default this software primarily targets Drakar och Demoner.
 For a swedish version just run **DoDA**
 In case you want to run an english version, just run **DoDA_eng**
+In case you want to run an Dungeon&Dragons version, just run **DoDA_dnd**
 
 ## Windows
 
@@ -33,13 +35,14 @@ For windows you need to install python. See more documentation at https://www.py
 
 For a swedish version just run **DoDA_win**
 In case you want to run an english version, just run **DoDA_win_eng**
+In case you want to run an english version, just run **DoDA_win_dnd**
 
 ## MAC(OSX)
 
 * Install Python via the terminal
   * Installera attrdict3 using *pip install attrdict3*
   * Installera wxPython using *pip install wxPython*
-* Should be able to start the program by double-clicking **DoDA_mac** or **DoDA_mac_eng** as well
+* Should be able to start the program by double-clicking **DoDA_mac**, **DoDA_mac_eng** or **DoDA_mac_dnd** as well
 * Otherwise start program by double-clicking on **DoDA.py**, then click **Run** -> **Run Module**
 
 
@@ -49,7 +52,7 @@ In case you want to run an english version, just run **DoDA_win_eng**
 ### Time
 
 The software keeps track of time and changes it accordingly by pressing a button and set it, or by pressing
-a button for round, quarter, shift.
+a button for the different time increases.
 The software also automatically checks if an events occur, and if an event has occured shows information
 about the event and the deletes it.
 
@@ -70,7 +73,7 @@ The sum hitpoints of all players is then used for random encounter.
 
 You can add random events that are randomized on different time occasions.
 Random events can either by monsters or just events.
-Events are defined by not setting the hitpoint, aka it is by default set to 0.
+Events are defined by not setting the hitpoint/HP, aka it is by default set to 0.
 For monsters instead you can add hitpoints, what their attitude is, the distance range  and some information.
 Selecting that a random event should accur using the menu item, automatically selects a random event among
 the ones that are currently selected in the list.
@@ -78,11 +81,11 @@ the ones that are currently selected in the list.
 ### Environments
 
 You can add an environment in the drop-down box. An environment is caracterized by the place as well as the
-time (Round, Quarter, Shift).
+time.
 Also selecting an amount of random events will automatically save this selection in the selected environment.
 If you change environment the selected random events will shift according. although no selected random events
 will be selected when using No environment.
-When progressing in time during the adventure a random event will be chosen depending on (Round, Quarter, Shift)
+When progressing in time during the adventure a random event will be chosen depending on the time settings
 on the selected environment.
 There is then a chance of 50% of a random event occuring.
 
@@ -90,4 +93,3 @@ There is then a chance of 50% of a random event occuring.
 
 There is no configuration per se in the software, but many parameters can be set by editing the
 file *config.py*
- 
