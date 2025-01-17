@@ -73,10 +73,13 @@ The sum hitpoints of all players is then used for random encounter.
 
 You can add random events that are randomized on different time occasions.
 Random events can either by monsters or just events.
-Events are defined by not setting the hitpoint/HP, aka it is by default set to 0.
-For monsters instead you can add hitpoints, what their attitude is, the distance range  and some information.
+Events are defined by not setting the hitpoint/HP/HD, aka it is by default set to 0.
+For monsters instead you can add hitpoints/HD, what their attitude is, the distance range  and some information.
 Selecting that a random event should accur using the menu item, automatically selects a random event among
 the ones that are currently selected in the list.
+
+In case of Dungeon & Dragons hitdice should be described as xdy+z, where x is the number of y sided dice plus z.
+Adding z is optional.
 
 ### Environments
 
@@ -113,8 +116,9 @@ By default this is set to 0.4 aka 40% chance of being discovered.
 ### Strength of wandering monsters
 
 The variable **HPRANGE** describes the strength of the wandering monster party.
-Each monster has a specific hitpoints which also the character have.
+Each monster has a specific hitpoints, or hit dice, which also the character have.
+In case of Dungeon & Dragons the monsters hitpoints is calculated from their hitdice.
 The number of monsters facing the characters is equal to the sum of the hitpoints for
-the party divided by the monsters hitpoints multiplied by **HPRANGE**.
+the party divided by the monsters hitpoints multiplied by **HPRANGE** and a random number (0-1).
 
-[Number of monsters]=[Sum Party HP]*HPRANGE/[Monster HP]
+[Number of monsters]=[Sum Party HP]*Random*HPRANGE/[Monster HP]

@@ -12,23 +12,23 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
-JSONRANDOMEVENT = '{\"title\": \"%s\", \"distmin\": \"%s\", \"distmax\": \"%s\", \"hp\": \"%s\", \"attitude\": \"%s\", \"text\": \"%s\"}%s'
+JSONRANDOMEVENT = '{\"title\": \"%s\", \"distmin\": \"%s\", \"distmax\": \"%s\", \"life\": \"%s\", \"attitude\": \"%s\", \"text\": \"%s\"}%s'
 JSONRANDOMEVENTS = '\"randomevents\": [\n'
 #------------------------------------------------------------------------------
 class RandomEvents:
   title = None
   distmin = None
   distmax = None
-  hp = None
+  life = None
   attitude = None
   text = None
 #------------------------------------------------------------------------------
-  def __init__(self, title, distmin, distmax, hp, attitude, text):
+  def __init__(self, title, distmin, distmax, life, attitude, text):
     self.title = title
     self.distmin = distmin
     self.distmax = distmax
     self.attitude = attitude
-    self.hp = hp
+    self.life = life
     self.text = text
 #------------------------------------------------------------------------------
   def jsonSaveHeader():
@@ -39,9 +39,9 @@ class RandomEvents:
       ending = '\n]'
     else:
       ending = ',\n'
-    return JSONRANDOMEVENT % (self.title, self.distmin, self.distmax, self.hp, self.attitude, self.text, ending)
+    return JSONRANDOMEVENT % (self.title, self.distmin, self.distmax, self.life, self.attitude, self.text, ending)
 #------------------------------------------------------------------------------
   @classmethod
   def jsonLoad(cls, data):
-    return cls(data['title'], int(data['distmin']), int(data['distmax']), int(data['hp']), int(data['attitude']), data['text'])
+    return cls(data['title'], int(data['distmin']), int(data['distmax']), data['life'], int(data['attitude']), data['text'])
 #------------------------------------------------------------------------------

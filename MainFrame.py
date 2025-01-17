@@ -13,6 +13,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #==============================================================================
 import wx
+import re
 import datetime
 import json
 import random
@@ -124,6 +125,30 @@ class MainFrame(wx.Frame):
     self.randomeventlist.Bind(wx.EVT_CHECKLISTBOX, self.onCheckRandomEventBox)
     self.printTime()
 #------------------------------------------------------------------------------
+  def isInt(self, text):
+    try: 
+      int(text)
+    except ValueError:
+      return False
+    else:
+      return True
+#------------------------------------------------------------------------------
+  def parseHD(self, text):
+    match = re.fullmatch(r'(\d+)?d(\d+)([+-]\d+)?', text.strip())
+    if match:
+      num_rolls = int(match.group(1)) if match.group(1) else 1
+      die_size = int(match.group(2))
+      modifier = int(match.group(3)) if match.group(3) else 0
+      return (num_rolls, die_size, modifier)
+    else:
+      raise ValueError("Invalid dice notation: {text}")
+#------------------------------------------------------------------------------
+  def rollDice(self, dice):
+    sum = dice[2]
+    for _ in range(dice[0]):
+      sum = sum + random.randint(1, dice[1])
+    return sum
+#------------------------------------------------------------------------------
   def onButton1(self, event, timediff, timeidx):
     self.tid = self.tid + timediff
     self.timeidx = timeidx
@@ -223,19 +248,29 @@ class MainFrame(wx.Frame):
     if len(self.randomeventlist.GetCheckedItems()) <= 0:
       return
     idx = self.randomeventlist.GetCheckedItems()[random.randrange(0,len(self.randomeventlist.GetCheckedItems()))]
-    if self.randomevents[idx].hp == 0:
+    if self.randomevents[idx].life == "0":
       encountertext = Config.LANG.RANDOMEVENTENCOUNTERTEXT %  (self.randomevents[idx].title, self.randomevents[idx].text)
     else:
       if self.randomevents[idx].attitude > 0:
         attitude = Config.LANG.ATTITUDES[self.randomevents[idx].attitude]
       else:
         attitude = Config.LANG.ATTITUDES[random.randrange(1,len(Config.LANG.ATTITUDES))]
-      numbers = int(sum(c.hp for c in self.characters)*random.random()*Config.HPRANGE/self.randomevents[idx].hp)
-      if numbers == 0:
-        numbers = 1
+      char_hp = sum(c.hp for c in self.characters)*random.random()*Config.HPRANGE
+      if self.isInt(self.randomevents[idx].life):
+        numbers = max(1, int(char_hp/int(self.randomevents[idx].life)))
+        hp_text=self.randomevents[idx].life
+      else:
+        numbers = 0
+        hp_text = ""
+        dice = self.parseHD(self.randomevents[idx].life)
+        while char_hp > 0:
+          i1 = self.rollDice(dice)
+          char_hp = char_hp - i1
+          numbers = numbers + 1
+          hp_text = hp_text + " " + str(i1)
       encountertext = Config.LANG.ENCOUNTERTEXT %  (self.randomevents[idx].title,
         numbers,
-        self.randomevents[idx].hp,
+        ', '.join(hp_text.split()),
         random.randrange(self.randomevents[idx].distmin, self.randomevents[idx].distmax),
         attitude,
         Config.LANG.YES if random.random() < Config.DISCOVEREDENCOUNTER else Config.LANG.NO,
@@ -328,7 +363,7 @@ class MainFrame(wx.Frame):
       return
     randomevent = self.randomevents[selection]
     randomeventframe = RandomEventFrame.RandomEventFrame()
-    randomeventframe.setValues(randomevent.title, randomevent.distmin, randomevent.distmax, randomevent.hp, randomevent.attitude, randomevent.text)
+    randomeventframe.setValues(randomevent.title, randomevent.distmin, randomevent.distmax, randomevent.life, randomevent.attitude, randomevent.text)
     randomeventframe.Show()
     while randomeventframe.IsShown():
       wx.GetApp().Yield()

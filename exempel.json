@@ -15,13 +15,13 @@
 {"name": "Glorfindel", "hp": "18", "ac": "1", "text": "Väldigt säker med bågen"}
 ],
 "randomevents": [
-{"title": "Råtta", "distmin": "50", "distmax": "100", "hp": "8", "attitude": "2", "text": "Råttan är smittad och farlig"},
-{"title": "Trädet faller", "distmin": "0", "distmax": "0", "hp": "0", "attitude": "0", "text": "Fallande träd hörs i skogen"},
-{"title": "Prasslar i buskarna", "distmin": "0", "distmax": "0", "hp": "0", "attitude": "0", "text": "Prasslar och skyndar sig bort när rollpersonerna kommer nära"},
-{"title": "Gast", "distmin": "50", "distmax": "200", "hp": "38", "attitude": "1", "text": "Gasten har rustning och svärd"},
-{"title": "Krigare", "distmin": "10", "distmax": "30", "hp": "28", "attitude": "0", "text": "Krigaren går runt på gatorna"},
-{"title": "Varg", "distmin": "50", "distmax": "200", "hp": "10", "attitude": "0", "text": "Vargen springer runt i skogen letandes efter mat"},
-{"title": "Troll", "distmin": "50", "distmax": "200", "hp": "38", "attitude": "1", "text": "Trollet går runt utanför sin grotta"}
+{"title": "Råtta", "distmin": "50", "distmax": "100", "life": "8", "attitude": "2", "text": "Råttan är smittad och farlig"},
+{"title": "Trädet faller", "distmin": "0", "distmax": "0", "life": "0", "attitude": "0", "text": "Fallande träd hörs i skogen"},
+{"title": "Prasslar i buskarna", "distmin": "0", "distmax": "0", "life": "0", "attitude": "0", "text": "Prasslar och skyndar sig bort när rollpersonerna kommer nära"},
+{"title": "Gast", "distmin": "50", "distmax": "200", "life": "38", "attitude": "1", "text": "Gasten har rustning och svärd"},
+{"title": "Krigare", "distmin": "10", "distmax": "30", "life": "28", "attitude": "0", "text": "Krigaren går runt på gatorna"},
+{"title": "Varg", "distmin": "50", "distmax": "200", "life": "10", "attitude": "0", "text": "Vargen springer runt i skogen letandes efter mat"},
+{"title": "Troll", "distmin": "50", "distmax": "200", "life": "38", "attitude": "1", "text": "Trollet går runt utanför sin grotta"}
 ],
 "environments": [
 {"title": "Läskiga skogen", "timeidx": "2", "randomevents": [{"idx": "1"},{"idx": "2"},{"idx": "5"},{"idx": "6"}]},

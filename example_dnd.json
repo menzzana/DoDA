@@ -15,13 +15,13 @@
 {"name": "Glorfindel", "hp": "18", "ac": "1", "text": "Good with the bow"}
 ],
 "randomevents": [
-{"title": "Rat", "distmin": "50", "distmax": "100", "life": "8", "attitude": "2", "text": "Rat is carrying diseases"},
+{"title": "Rat", "distmin": "50", "distmax": "100", "life": "1d4", "attitude": "2", "text": "Rat is carrying diseases"},
 {"title": "Tree is falling", "distmin": "0", "distmax": "0", "life": "0", "attitude": "0", "text": "Falling tree in the woods"},
 {"title": "Movement in bushes", "distmin": "0", "distmax": "0", "life": "0", "attitude": "0", "text": "Movement and sounds in the bushes which runs away when approached"},
-{"title": "Ghost", "distmin": "50", "distmax": "200", "life": "38", "attitude": "1", "text": "Ghost has armor and sword"},
-{"title": "Warrior", "distmin": "10", "distmax": "30", "life": "28", "attitude": "0", "text": "Warriors patrolling streets"},
-{"title": "Wolf", "distmin": "50", "distmax": "200", "life": "10", "attitude": "0", "text": "Wolf looking for food"},
-{"title": "Troll", "distmin": "50", "distmax": "200", "life": "38", "attitude": "1", "text": "Troll goes around its cave"}
+{"title": "Ghost", "distmin": "50", "distmax": "200", "life": "10d8", "attitude": "1", "text": "Ghost has armor and sword"},
+{"title": "Warrior", "distmin": "10", "distmax": "30", "life": "1d8+2", "attitude": "0", "text": "Warriors patrolling streets"},
+{"title": "Wolf", "distmin": "50", "distmax": "200", "life": "2d8", "attitude": "0", "text": "Wolf looking for food"},
+{"title": "Troll", "distmin": "50", "distmax": "200", "life": "8d10", "attitude": "1", "text": "Troll goes around its cave"}
 ],
 "environments": [
 {"title": "Creepy wood", "timeidx": "2", "randomevents": [{"idx": "1"},{"idx": "2"},{"idx": "5"},{"idx": "6"}]},

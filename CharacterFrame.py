@@ -32,7 +32,7 @@ class CharacterFrame(wx.Frame):
     lbl1font = self.GetFont() 
     lbl1font.SetWeight(wx.BOLD)
     lbl1.SetFont(lbl1font)
-    lbl5 = wx.StaticText(self.panel, pos = (10, 65), size = (150,20), label = Config.LANG.CHARHP)
+    lbl5 = wx.StaticText(self.panel, pos = (10, 65), size = (150,20), label = Config.LANG.CHARLIFE)
     lbl5.SetFont(lbl1font)
     lbl2 = wx.StaticText(self.panel, pos = (10, 100), size = (150,20), label = Config.LANG.CHARAC)
     lbl2.SetFont(lbl1font)

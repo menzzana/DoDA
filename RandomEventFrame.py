@@ -38,7 +38,7 @@ class RandomEventFrame(wx.Frame):
     lbl5.SetFont(lbl1font)
     lbl6 = wx.StaticText(self.panel, pos = (270, 65), size = (20,20), label = Config.MINUS)
     lbl6.SetFont(lbl1font)
-    lbl2 = wx.StaticText(self.panel, pos = (10, 95), size = (150,20), label = Config.LANG.CHARHP)
+    lbl2 = wx.StaticText(self.panel, pos = (10, 95), size = (150,20), label = Config.LANG.MONSTERLIFE)
     lbl2.SetFont(lbl1font)
     lbl3 = wx.StaticText(self.panel, pos = (10, 130), size = (150,20), label = Config.LANG.ATTITUDE)
     lbl3.SetFont(lbl1font)
